@@ -40,11 +40,13 @@ public:
                                                                                                bonusuri(bonusuri) {}
 
     friend std::ostream &operator<<(std::ostream &os, const abonament &abonament) {
-        os << "pret: " << abonament.pret << " nume: " << abonament.nume ;
+        os << "pret: " << abonament.pret << "\nnume: " << abonament.nume << "\nbonusuri: ";
         for(const auto & bonus : abonament.bonusuri)
-            os<<bonus;
+            os<<bonus<<" ";
         return os;
     }
+
+
 
 
 };
@@ -53,20 +55,32 @@ class client{
     std::string name;
     int varsta;
     std::string gen;
+    abonament abonament;
+
 
 public:
-    client(const std::string &name, int varsta, const std::string &gen) : name(name), varsta(varsta), gen(gen) {}
+    client(const std::string &name, int varsta, const std::string &gen, const class abonament &abonament) : name(name),
+                                                                                                      varsta(varsta),
+                                                                                                      gen(gen),
+                                                                                                      abonament(
+                                                                                                              abonament) {}
 
     friend std::ostream &operator<<(std::ostream &os, const client &client) {
-        os << "name: " << client.name << " varsta: " << client.varsta << " gen: " << client.gen;
+        os << "name: " << client.name << " varsta: " << client.varsta << " gen: " << client.gen << "\nabonament: " << client.abonament;
         return os;
     }
+
+    void adauga(const class abonament tip)
+    {
+        abonament = tip;
+    }
+
 
 
 };
 
 class gym_parteners{
-
+    std::vector<gym> gyms;
 };
 
 int main ()
@@ -75,6 +89,10 @@ int main ()
     day = {"Luni","Marti","Miercuri","Joi","Vineri","Sambata","Duminica"};
     gym worlclass{"WorldClass"s,"Str.Aviatorilor nr.19"s,day,{"8:00-22:00","8:00-22:00","8:00-22:00","8:00-22:00","8:00-22:00","9:00-16:00","closed"}};
     gym energymhealth_pub{"energymhealt.pub"s,"Str.Dorobantilor bloc 8 sc B etaj 8"s,day,{"8:00-22:00","8:00-22:00","8:00-22:00","8:00-22:00","8:00-22:00","9:00-16:00","closed"}};
-    std::cout<<worlclass;
-    std::cout<<energymhealth_pub;
+    //std::cout<<worlclass;
+    //std::cout<<energymhealth_pub;
+    abonament incepator(140,"Incepator",{"Antrenamente online","8 sedinte pe luna","Acces la orice sala partenera"});
+    //std::cout<<incepator;
+    client marius{"Marius"s,21,"m"s,incepator};
+    std::cout << marius;
 }
