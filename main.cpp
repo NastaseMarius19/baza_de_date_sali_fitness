@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <array>
 
 using namespace std::string_literals;
 
@@ -32,6 +31,9 @@ public:
 
     }
 
+    const std::string &getName() const {
+        return name;
+    }
 
 
 };
@@ -59,33 +61,36 @@ public:
             this->bonusuri.push_back(bonus);
     }
 
+    const std::string &getNume() const {
+        return nume;
+    }
+
 };
 
 class client{
-    std::string name;
+    std::string userName;
     int varsta;
-    std::string gen;
+    std::string parola;
     abonament abonament;
 
 public:
-    client(const std::string &name, int varsta, const std::string &gen, const class abonament &abonament) : name(name),
+    client(const std::string &userName, int varsta, const std::string &parola, const class abonament &abonament) : userName(userName),
                                                                                                       varsta(varsta),
-                                                                                                      gen(gen),
+                                                                                                      parola(parola),
                                                                                                       abonament(
                                                                                                               abonament) {}
 
     friend std::ostream &operator<<(std::ostream &os, const client &client) {
-        os << "name: " << client.name << " varsta: " << client.varsta << " gen: " << client.gen << "\nabonament: " << client.abonament;
+        os << "name: " << client.userName << " varsta: " << client.varsta << " gen: " << client.parola << "\nabonament: " << client.abonament;
         return os;
     }
 
-    void adauga(const class abonament tip)
-    {
-        abonament = tip;
+    const std::string &getName() const {
+        return userName;
     }
 
-    const std::string &getName() const {
-        return name;
+    const std::string &getParola() const {
+        return parola;
     }
 
 };
@@ -93,22 +98,91 @@ public:
 class gym_parteners{
     std::vector<gym> gyms;
     std::vector<client> clienti;
-
+    std::vector<abonament> abonamente;
+    bool p;
 public:
-    gym_parteners(const std::vector<gym> &gyms, const std::vector<client> &clienti) : gyms(gyms), clienti(clienti) {}
 
-    void adauga(gym gym)
+    gym_parteners(const std::vector<gym> &gyms, const std::vector<client> &clienti,
+                  const std::vector<abonament> &abonamente) : gyms(gyms), clienti(clienti), abonamente(abonamente) {}
+
+
+    void login(std::string nume)
     {
-        gyms.push_back(gym);
+        for(const auto & client:clienti)
+            if(client.getName().compare(nume)==0)
+            {
+                std::cout<<"Introduceti parola: ";
+                std::string parola;
+                std::cin>>parola;
+                if(client.getParola().compare(parola)==0)
+                {
+                    std::cout<<"Bine ati venit! \n";
+                    std::cout<<client;
+                    p=0;
+                    break;
+
+                }
+
+            } else
+                p=1;
+
+    }
+    class client register_client()
+    {
+        std::string name;
+        int varsta;
+        std::string parola;
+        std::string nume_abonament;
+        std::cout<<"Introduceti username-ul dorit: ";
+        std::cin>>name;
+        std::cout<<"\n";
+        for(int i = 0 ; i < clienti.size();i++)
+            if(clienti[i].getName().compare(name)==0)
+            {
+                std::cout<<"Username-ul deja existent, va rog alegeti altul:";
+                std::cin>>name;
+                std::cout<<"\n";
+                i=-1;
+
+            }
+        std::cout<<"Introduceti parola:";
+        std::cin>>parola;
+        std::cout<<"\n";
+        std::cout<<"Introduceti varsta:";
+        std::cin>>varsta;
+        std::cout<<"\n";
+        std::cout<<"Alegeti abonamentul dorit din lista urmatoare:\n";
+        std::cout<<"incepator - 140 de lei\navansat - 200 de lei\nVIP - 400 de lei\nTip abonament:";
+        std::cin>>nume_abonament;
+        for(int i = 0 ; i < abonamente.size();i++)
+            if(abonamente[i].getNume().compare(nume_abonament)==0)
+            {
+                class abonament aux = abonamente[i];
+                class client client = {name,varsta,parola,aux};
+                return client;
+            }
+    };
+
+    void adauga_client(const class client& client)
+    {
+        clienti.push_back(client);
     }
 
-    void cauta(std::string nume)
+    bool isP() const {
+        return p;
+    }
+
+    void afis()
     {
-        for(const auto & sala : clienti) // for(int i=0 ; i<client.size();i++)
-            if(nume.compare(sala.getName())==0)
-                std::cout<<"Este clientul nostru!";
-            else
-                std::cout<<"Nu este clientul nostru";
+        std::cout<<"gyms: ";
+        for(const auto & gym : gyms)
+            std::cout<< gym.getName()<<" ";
+        std::cout<<"\nclienti: ";
+        for(const auto & client : clienti)
+            std::cout<< client.getName()<< " ";
+        std::cout<<"\nabonamente: ";
+        for(const auto & abonament : abonamente)
+            std::cout<<abonament.getNume()<<" ";
 
     }
 
@@ -117,18 +191,37 @@ public:
     }
 };
 
-int main ()
-{
-    gym worldclass{"WordlClass"s,"Str.Soarelui Nr.25"s,{{"Luni","8:00-22:00"},{"Marti","8:00-22:00"},{"Miercuri","8:00-22:00"},{"Joi","8:00-22:00"},{"Vineri","8:00-22:00"},{"Sambata","10:00-16:00"},{"Duminica","INCHIS"}}};
-    gym energymhealth_hub{"energymhealth_hub"s,"Str.Mircea Bravo Nr.33"s,{{"Luni","8:00-22:00"},{"Marti","8:00-22:00"},{"Miercuri","8:00-22:00"},{"Joi","8:00-22:00"},{"Vineri","8:00-22:00"},{"Sambata","10:00-16:00"},{"Duminica","INCHIS"}}};
-    gym anturaj_gym{"Anturaj Gym"s,"Str.Principala Bloc 8 Sc.A Et.4"s,{{"Luni","8:00-22:00"},{"Marti","8:00-22:00"},{"Miercuri","8:00-22:00"},{"Joi","8:00-22:00"},{"Vineri","8:00-22:00"},{"Sambata","INCHIS"},{"Duminica","INCHIS"}}};
-    abonament incepator(140,"Incepator",{"Antrenamente online","8 sedinte pe luna"s});
-    abonament avansat(200,"Avansat",{"Antrenamente online"s,"O intrare pe zi la orice sala partenera"s,"4 sedinte cu antrenor personal"s});
-    abonament VIP(300,"VIP",{"Antrenamente online"s,"Intrare libera la orice sala partenera"s,"8 sedinte cu antrenor personal"s,"diete personalizate"s});
-    //std::cout<<incepator;
-    client marius{"Marius"s,21,"m"s,incepator};
-    //std::cout << marius;
-    gym_parteners ESX{{worldclass},{marius}};
-    ESX.cauta("Marius");
-
+int main () {
+    gym worldclass{"WordlClass"s, "Str.Soarelui Nr.25"s,
+                   {{"Luni", "8:00-22:00"}, {"Marti", "8:00-22:00"}, {"Miercuri", "8:00-22:00"}, {"Joi", "8:00-22:00"},
+                    {"Vineri", "8:00-22:00"}, {"Sambata", "10:00-16:00"}, {"Duminica", "INCHIS"}}};
+    gym energymhealth_hub{"energymhealth_hub"s, "Str.Mircea Bravo Nr.33"s,
+                          {{"Luni", "8:00-22:00"}, {"Marti", "8:00-22:00"}, {"Miercuri", "8:00-22:00"},
+                           {"Joi", "8:00-22:00"}, {"Vineri", "8:00-22:00"}, {"Sambata", "10:00-16:00"},
+                           {"Duminica", "INCHIS"}}};
+    gym anturaj_gym{"Anturaj Gym"s, "Str.Principala Bloc 8 Sc.A Et.4"s,
+                    {{"Luni", "8:00-22:00"}, {"Marti", "8:00-22:00"}, {"Miercuri", "8:00-22:00"}, {"Joi", "8:00-22:00"},
+                     {"Vineri", "8:00-22:00"}, {"Sambata", "INCHIS"}, {"Duminica", "INCHIS"}}};
+    abonament incepator(140, "Incepator", {"Antrenamente online", "8 sedinte pe luna"s});
+    abonament avansat(200, "Avansat", {"Antrenamente online"s, "O intrare pe zi la orice sala partenera"s,
+                                       "4 sedinte cu antrenor personal"s});
+    abonament VIP(300, "VIP",
+                  {"Antrenamente online"s, "Intrare libera la orice sala partenera"s, "8 sedinte cu antrenor personal"s,
+                   "diete personalizate"s});
+    client marius{"Marius"s, 21, "123456"s, incepator};
+    gym_parteners AppGym{{worldclass, energymhealth_hub, anturaj_gym},
+                         {marius},
+                         {incepator,  avansat,           VIP}};
+    std::string nume;
+    std::cin >> nume;
+    //AppGym.afis();
+    //std::cout<<AppGym;
+    AppGym.login(nume);
+    if (AppGym.isP() == 1)
+    {
+        class client client = AppGym.register_client();
+        std::cout<<client;
+        AppGym.adauga_client(client);
+    }
+    AppGym.afis();
 }
