@@ -24,9 +24,9 @@ public:
         return os;
     }
 
-    void adauga(std::vector<std::pair<std::string, std::string>> &b)
+    void adauga(std::vector<std::pair<std::string, std::string>> &days)
     {
-        for(auto const & day : b)
+        for(auto const & day : days)
             program.push_back(day);
 
     }
@@ -51,6 +51,11 @@ public:
         for(const auto & bonus : abonament.bonusuri)
             os<<bonus<<" ";
         return os;
+    }
+
+    abonament& operator=(const abonament& copie) {
+        this->nume = copie.nume;
+        return *this;
     }
 
     abonament(const abonament& copie)
@@ -99,7 +104,7 @@ class gym_parteners{
     std::vector<gym> gyms;
     std::vector<client> clienti;
     std::vector<abonament> abonamente;
-    bool p;
+    bool check;
 public:
 
     gym_parteners(const std::vector<gym> &gyms, const std::vector<client> &clienti,
@@ -118,13 +123,13 @@ public:
                 {
                     std::cout<<"Bine ati venit! \n";
                     std::cout<<client;
-                    p=0;
+                    check=0;
                     break;
 
                 }
 
             } else
-                p=1;
+                check=1;
 
     }
     class client register_client()
@@ -168,8 +173,13 @@ public:
         clienti.push_back(client);
     }
 
+    void adauga_gym(const class gym& gym)
+    {
+        gyms.push_back(gym);
+    }
+
     bool isP() const {
-        return p;
+        return check;
     }
 
     void afis()
@@ -199,7 +209,7 @@ int main () {
                           {{"Luni", "8:00-22:00"}, {"Marti", "8:00-22:00"}, {"Miercuri", "8:00-22:00"},
                            {"Joi", "8:00-22:00"}, {"Vineri", "8:00-22:00"}, {"Sambata", "10:00-16:00"},
                            {"Duminica", "INCHIS"}}};
-    gym anturaj_gym{"Anturaj Gym"s, "Str.Principala Bloc 8 Sc.A Et.4"s,
+    gym anturaj_gym{"Anturaj_Gym"s, "Str.Principala Bloc 8 Sc.A Et.4"s,
                     {{"Luni", "8:00-22:00"}, {"Marti", "8:00-22:00"}, {"Miercuri", "8:00-22:00"}, {"Joi", "8:00-22:00"},
                      {"Vineri", "8:00-22:00"}, {"Sambata", "INCHIS"}, {"Duminica", "INCHIS"}}};
     abonament incepator(140, "Incepator", {"Antrenamente online", "8 sedinte pe luna"s});
@@ -214,8 +224,7 @@ int main () {
                          {incepator,  avansat,           VIP}};
     std::string nume;
     std::cin >> nume;
-    //AppGym.afis();
-    //std::cout<<AppGym;
+    AppGym.afis();
     AppGym.login(nume);
     if (AppGym.isP() == 1)
     {
@@ -223,5 +232,5 @@ int main () {
         std::cout<<client;
         AppGym.adauga_client(client);
     }
-    AppGym.afis();
+   AppGym.afis();
 }
