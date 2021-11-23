@@ -233,4 +233,5 @@ int main () {
         AppGym.adauga_client(client);
     }
    AppGym.afis();
+    bambam
 }
