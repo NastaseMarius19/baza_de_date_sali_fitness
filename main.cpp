@@ -11,9 +11,9 @@ class gym
     std::string location;
     std::vector<std::pair<std::string, std::string>> program;
 public:
-    gym(const std::string &name, const std::string &location,
-        const std::vector<std::pair<std::string, std::string>> &program) : name(name), location(location),
-                                                                             program(program) {}
+    gym(std::string name, std::string location,
+        std::vector<std::pair<std::string, std::string>> program) : name(std::move(name)), location(std::move(location)),
+                                                                             program(std::move(program)) {}
 
     friend std::ostream &operator<<(std::ostream &os, const gym &gym) {
         os << "name: " << gym.name << "\nlocation: " << gym.location << "\nprogram: ";
@@ -35,6 +35,13 @@ public:
         return name;
     }
 
+    const std::string &getLocation() const {
+        return location;
+    }
+
+    const std::vector<std::pair<std::string, std::string>> &getProgram() const {
+        return program;
+    }
 
 };
 
@@ -43,18 +50,21 @@ class abonament{
     std::string nume;
     std::vector<std::string> bonusuri;
 public:
-    abonament(float pret, const std::string &nume, const std::vector<std::string> &bonusuri) : pret(pret), nume(nume),
-                                                                                               bonusuri(bonusuri) {}
+    abonament(float pret, std::string nume, std::vector<std::string> bonusuri) : pret(pret), nume(std::move(nume)),
+                                                                                               bonusuri(std::move(bonusuri)) {}
 
     friend std::ostream &operator<<(std::ostream &os, const abonament &abonament) {
-        os << "pret: " << abonament.pret << "\nnume: " << abonament.nume << "\nbonusuri: ";
+        os << "pret: " << abonament.pret << "\nnume: " << abonament.nume << "\nbonusuri:\n ";
         for(const auto & bonus : abonament.bonusuri)
-            os<<bonus<<" ";
+            os<<bonus<<"\n";
         return os;
     }
 
     abonament& operator=(const abonament& copie) {
         this->nume = copie.nume;
+        this->pret = copie.pret;
+        for(const auto& bonus:copie.bonusuri)
+            this->bonusuri.push_back(bonus);
         return *this;
     }
 
@@ -70,6 +80,25 @@ public:
         return nume;
     }
 
+    float getPret() const {
+        return pret;
+    }
+
+    void setPret(float pret) {
+        abonament::pret = pret;
+    }
+
+    void setNume(const std::string &nume) {
+        abonament::nume = nume;
+    }
+
+    const std::vector<std::string> &getBonusuri() const {
+        return bonusuri;
+    }
+
+    void setBonusuri(const std::vector<std::string> &bonusuri) {
+        abonament::bonusuri = bonusuri;
+    }
 };
 
 class client{
@@ -79,9 +108,9 @@ class client{
     abonament abonament;
 
 public:
-    client(const std::string &userName, int varsta, const std::string &parola, const class abonament &abonament) : userName(userName),
+    client(std::string userName, int varsta, std::string parola, const class abonament &abonament) : userName(std::move(userName)),
                                                                                                       varsta(varsta),
-                                                                                                      parola(parola),
+                                                                                                      parola(std::move(parola)),
                                                                                                       abonament(
                                                                                                               abonament) {}
 
@@ -94,79 +123,59 @@ public:
         return userName;
     }
 
+    const class abonament &getAbonament() const {
+        return abonament;
+    }
+
+    void schimba_abonament(class abonament& abonament_nou){
+        abonament=abonament_nou;
+    }
+
+    void reducere(const int procent){
+        float pret_nou;
+        pret_nou=abonament.getPret();
+        pret_nou-=(pret_nou*procent)/100;
+        abonament.setPret(pret_nou);
+    }
+
+    void schimba_parola(){
+        for(int i =0 ;i<3;i++){
+        std::string parola_noua;
+        std::string parola_noua_verificare;
+        std::cout<<"Introduceti parola noua:";
+        std::cin>>parola_noua;
+        std::cout<<"Introduceti din nou parola noua:";
+        std::cin>>parola_noua_verificare;
+        if(parola_noua==parola_noua_verificare)
+        {
+            parola = parola_noua;
+            std::cout<<"Parola noua setata!\n";
+            break;
+        }
+
+        else
+            std::cout<<"Parola noua nu este aceeasi in ambele campuri, incercati din nou(mai aveti "<<3-i<<" incercari)!\n";}
+
+    }
+protected:
     const std::string &getParola() const {
         return parola;
     }
 
 };
 
-class gym_parteners{
+class aplicatie{
     std::vector<gym> gyms;
     std::vector<client> clienti;
     std::vector<abonament> abonamente;
-    bool check;
+    std::string nume;
+    std::string fondator;
+
+
 public:
-
-    gym_parteners(const std::vector<gym> &gyms, const std::vector<client> &clienti,
-                  const std::vector<abonament> &abonamente) : gyms(gyms), clienti(clienti), abonamente(abonamente) {}
-
-
-    void login(std::string nume)
-    {
-        for(const auto & client:clienti)
-            if(client.getName().compare(nume)==0)
-            {
-                std::cout<<"Introduceti parola: ";
-                std::string parola;
-                std::cin>>parola;
-                if(client.getParola().compare(parola)==0)
-                {
-                    std::cout<<"Bine ati venit! \n";
-                    std::cout<<client;
-                    check=0;
-                    break;
-
-                }
-
-            } else
-                check=1;
-
-    }
-    class client register_client()
-    {
-        std::string name;
-        int varsta;
-        std::string parola;
-        std::string nume_abonament;
-        std::cout<<"Introduceti username-ul dorit: ";
-        std::cin>>name;
-        std::cout<<"\n";
-        for(int i = 0 ; i < clienti.size();i++)
-            if(clienti[i].getName().compare(name)==0)
-            {
-                std::cout<<"Username-ul deja existent, va rog alegeti altul:";
-                std::cin>>name;
-                std::cout<<"\n";
-                i=-1;
-
-            }
-        std::cout<<"Introduceti parola:";
-        std::cin>>parola;
-        std::cout<<"\n";
-        std::cout<<"Introduceti varsta:";
-        std::cin>>varsta;
-        std::cout<<"\n";
-        std::cout<<"Alegeti abonamentul dorit din lista urmatoare:\n";
-        std::cout<<"incepator - 140 de lei\navansat - 200 de lei\nVIP - 400 de lei\nTip abonament:";
-        std::cin>>nume_abonament;
-        for(int i = 0 ; i < abonamente.size();i++)
-            if(abonamente[i].getNume().compare(nume_abonament)==0)
-            {
-                class abonament aux = abonamente[i];
-                class client client = {name,varsta,parola,aux};
-                return client;
-            }
-    };
+    aplicatie(std::vector<gym> gyms, std::vector<client> clienti,
+              std::vector<abonament> abonamente, std::string nume, std::string fondator) : gyms(std::move(
+            gyms)), clienti(std::move(clienti)), abonamente(std::move(abonamente)), nume(std::move(nume)), fondator(std::move(fondator)) {}
 
     void adauga_client(const class client& client)
     {
@@ -178,25 +187,49 @@ public:
         gyms.push_back(gym);
     }
 
-    bool isP() const {
-        return check;
+    void aduaga_abonament(class abonament& abonament)
+    {
+        abonamente.push_back(abonament);
     }
+
 
     void afis()
     {
-        std::cout<<"gyms: ";
+        std::cout<<"sali de sport partenere:\n";
         for(const auto & gym : gyms)
-            std::cout<< gym.getName()<<" ";
-        std::cout<<"\nclienti: ";
+            std::cout<< gym.getName()<<"\n";
+        std::cout<<"\nclienti:\n";
         for(const auto & client : clienti)
-            std::cout<< client.getName()<< " ";
-        std::cout<<"\nabonamente: ";
+            std::cout<< client.getName()<< "\n";
+        std::cout<<"\nabonamente dispinibile:\n";
         for(const auto & abonament : abonamente)
-            std::cout<<abonament.getNume()<<" ";
-
+            std::cout<<abonament.getNume()<<"\n";
+    }
+    void scbimba_abonament_client(const std::string& abonament_nou,const std::string& nume_client){
+        for(auto& client:clienti)
+            if(client.getName()==nume_client) {
+                for (auto &abonament: abonamente) {
+                    if (abonament.getNume() == abonament_nou)
+                        client.schimba_abonament(abonament);
+                    break;
+                }
+            }
+        std::cout<<"Ati introdus un abonament invalid.";
     }
 
-    ~gym_parteners() {
+    void setNume(const std::string &nume) {
+        aplicatie::nume = nume;
+    }
+
+    const std::string &getNume() const {
+        return nume;
+    }
+
+    const std::string &getFondator() const {
+        return fondator;
+    }
+
+    ~aplicatie() {
         std::cout<<"\nDestructor";
     }
 };
@@ -219,19 +252,17 @@ int main () {
                   {"Antrenamente online"s, "Intrare libera la orice sala partenera"s, "8 sedinte cu antrenor personal"s,
                    "diete personalizate"s});
     client marius{"Marius"s, 21, "123456"s, incepator};
-    gym_parteners AppGym{{worldclass, energymhealth_hub, anturaj_gym},
-                         {marius},
-                         {incepator,  avansat,           VIP}};
-    std::string nume;
-    std::cin >> nume;
+    aplicatie AppGym{{worldclass},{marius},{incepator},"Work Smart","Nastase Marius"};
+    AppGym.adauga_gym(energymhealth_hub);
+    AppGym.adauga_gym(anturaj_gym);
+    AppGym.aduaga_abonament(avansat);
+    AppGym.aduaga_abonament(VIP);
+    std::cout<<AppGym.getNume()<<"\n";
+    std::cout<<"Fondatorul aplicatiei este: "<<AppGym.getFondator()<<"\n";
     AppGym.afis();
-    AppGym.login(nume);
-    if (AppGym.isP() == 1)
-    {
-        class client client = AppGym.register_client();
-        std::cout<<client;
-        AppGym.adauga_client(client);
-    }
-   AppGym.afis();
-    radadqweweqweqwqwdqdsada
+    marius.schimba_parola();
+    marius.schimba_abonament(VIP);
+    marius.reducere(20);
+    std::cout<<marius.getAbonament();
+
 }
