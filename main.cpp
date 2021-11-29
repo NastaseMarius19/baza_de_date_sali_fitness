@@ -17,15 +17,13 @@ public:
 
     friend std::ostream &operator<<(std::ostream &os, const gym &gym) {
         os << "name: " << gym.name << "\nlocation: " << gym.location << "\nprogram: ";
-        for(auto const & day : gym.program)
-        {
+        for(auto const & day : gym.program) {
             os << day.first << " : " << day.second << "\n";
         }
         return os;
     }
 
-    void adauga(std::vector<std::pair<std::string, std::string>> &days)
-    {
+    void adauga(std::vector<std::pair<std::string, std::string>> &days) {
         for(auto const & day : days)
             program.push_back(day);
 
@@ -60,19 +58,18 @@ public:
         return os;
     }
 
-    abonament& operator=(const abonament& copie) {
+    abonament& operator=(const abonament &copie) {
         this->nume = copie.nume;
         this->pret = copie.pret;
-        for(const auto& bonus:copie.bonusuri)
+        for(const auto &bonus : copie.bonusuri)
             this->bonusuri.push_back(bonus);
         return *this;
     }
 
-    abonament(const abonament& copie)
-    {
+    abonament(const abonament &copie) {
         this->pret = copie.pret;
         this->nume = copie.nume;
-        for(const auto& bonus:copie.bonusuri)
+        for(const auto &bonus : copie.bonusuri)
             this->bonusuri.push_back(bonus);
     }
 
@@ -105,7 +102,7 @@ class client{
     std::string userName;
     int varsta;
     std::string parola;
-    abonament abonament;
+    class abonament abonament;
 
 public:
     client(std::string userName, int varsta, std::string parola, const class abonament &abonament) : userName(std::move(userName)),
@@ -127,36 +124,36 @@ public:
         return abonament;
     }
 
-    void schimba_abonament(class abonament& abonament_nou){
-        abonament=abonament_nou;
+    void schimba_abonament(class abonament &abonament_nou) {
+        abonament = abonament_nou;
     }
 
-    void reducere(const int procent){
-        float pret_nou;
-        pret_nou=abonament.getPret();
-        pret_nou-=(pret_nou*procent)/100;
-        abonament.setPret(pret_nou);
-    }
-
-    void schimba_parola(){
-        for(int i =0 ;i<3;i++){
+    void schimba_parola() {
+        for(int i = 0; i < 3; i++) {
         std::string parola_noua;
         std::string parola_noua_verificare;
-        std::cout<<"Introduceti parola noua:";
-        std::cin>>parola_noua;
-        std::cout<<"Introduceti din nou parola noua:";
-        std::cin>>parola_noua_verificare;
-        if(parola_noua==parola_noua_verificare)
+        std::cout << "Introduceti parola noua:";
+        std::cin >> parola_noua;
+        std::cout << "Introduceti din nou parola noua:";
+        std::cin >> parola_noua_verificare;
+        if(parola_noua == parola_noua_verificare)
         {
             parola = parola_noua;
-            std::cout<<"Parola noua setata!\n";
+            std::cout << "Parola noua setata!\n";
             break;
         }
 
         else
-            std::cout<<"Parola noua nu este aceeasi in ambele campuri, incercati din nou(mai aveti "<<3-i<<" incercari)!\n";}
+            std::cout << "Parola noua nu este aceeasi in ambele campuri, incercati din nou(mai aveti "<<3-i<<" incercari)!\n"; }
 
     }
+    void reducere(const int procent) {
+        float pret_nou;
+        pret_nou = abonament.getPret();
+        pret_nou -= (pret_nou * procent) / 100;
+        abonament.setPret(pret_nou);
+    }
+
 protected:
     const std::string &getParola() const {
         return parola;
@@ -177,44 +174,41 @@ public:
               std::vector<abonament> abonamente, std::string nume, std::string fondator) : gyms(std::move(
             gyms)), clienti(std::move(clienti)), abonamente(std::move(abonamente)), nume(std::move(nume)), fondator(std::move(fondator)) {}
 
-    void adauga_client(const class client& client)
-    {
+    void adauga_client(const class client &client) {
         clienti.push_back(client);
     }
 
-    void adauga_gym(const class gym& gym)
-    {
+    void adauga_gym(const class gym &gym) {
         gyms.push_back(gym);
     }
 
-    void aduaga_abonament(class abonament& abonament)
-    {
+    void aduaga_abonament(class abonament &abonament) {
         abonamente.push_back(abonament);
     }
 
 
     void afis()
     {
-        std::cout<<"sali de sport partenere:\n";
-        for(const auto & gym : gyms)
-            std::cout<< gym.getName()<<"\n";
-        std::cout<<"\nclienti:\n";
-        for(const auto & client : clienti)
-            std::cout<< client.getName()<< "\n";
-        std::cout<<"\nabonamente dispinibile:\n";
-        for(const auto & abonament : abonamente)
-            std::cout<<abonament.getNume()<<"\n";
+        std::cout << "sali de sport partenere:\n";
+        for(const auto &gym : gyms)
+            std::cout << gym.getName() << "\n";
+        std::cout << "\nclienti:\n";
+        for(const auto &client : clienti)
+            std::cout << client.getName() << "\n";
+        std::cout << "\nabonamente dispinibile:\n";
+        for(const auto &abonament : abonamente)
+            std::cout << abonament.getNume() << "\n";
     }
     void scbimba_abonament_client(const std::string& abonament_nou,const std::string& nume_client){
         for(auto& client:clienti)
-            if(client.getName()==nume_client) {
-                for (auto &abonament: abonamente) {
+            if(client.getName() == nume_client) {
+                for (auto &abonament : abonamente) {
                     if (abonament.getNume() == abonament_nou)
                         client.schimba_abonament(abonament);
                     break;
                 }
             }
-        std::cout<<"Ati introdus un abonament invalid.";
+        std::cout << "Ati introdus un abonament invalid.";
     }
 
     void setNume(const std::string &nume) {
@@ -230,7 +224,7 @@ public:
     }
 
     ~aplicatie() {
-        std::cout<<"\nDestructor";
+        std::cout << "\nDestructor";
     }
 };
 
@@ -262,7 +256,7 @@ int main () {
     AppGym.afis();
     marius.schimba_parola();
     marius.schimba_abonament(VIP);
-    marius.reducere(20);
-    std::cout<<marius.getAbonament();
+    //marius.reducere(20);
+    std::cout << marius.getAbonament();
 
 }
