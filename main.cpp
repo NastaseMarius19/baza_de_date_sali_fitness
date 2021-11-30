@@ -120,7 +120,7 @@ public:
         return userName;
     }
 
-    const class abonament &getAbonament() const {
+    class abonament &getAbonament() {
         return abonament;
     }
 
@@ -147,12 +147,6 @@ public:
             std::cout << "Parola noua nu este aceeasi in ambele campuri, incercati din nou(mai aveti "<<3-i<<" incercari)!\n"; }
 
     }
-    void reducere(const int procent) {
-        float pret_nou;
-        pret_nou = abonament.getPret();
-        pret_nou -= (pret_nou * procent) / 100;
-        abonament.setPret(pret_nou);
-    }
 
 protected:
     const std::string &getParola() const {
@@ -167,12 +161,24 @@ class aplicatie{
     std::vector<abonament> abonamente;
     std::string nume;
     std::string fondator;
+    std::vector<std::pair<std::string, int >> cupoane;
 
 
 public:
     aplicatie(std::vector<gym> gyms, std::vector<client> clienti,
-              std::vector<abonament> abonamente, std::string nume, std::string fondator) : gyms(std::move(
-            gyms)), clienti(std::move(clienti)), abonamente(std::move(abonamente)), nume(std::move(nume)), fondator(std::move(fondator)) {}
+              std::vector<abonament> abonamente, std::string nume, std::string fondator,
+              std::vector<std::pair<std::string, int>> cupoane) : gyms(std::move(gyms)), clienti(std::move(clienti)),
+                                                                         abonamente(std::move(abonamente)), nume(std::move(nume)),
+                                                                         fondator(std::move(fondator)), cupoane(std::move(cupoane)) {}
+
+    void setCupoane(const std::vector<std::pair<std::string, int>> &cupoane) {
+        aplicatie::cupoane = cupoane;
+    }
+
+
+    void adauga_cupon(const std::string& nume_cupon, int procent_reducere_cupon) {
+        cupoane.emplace_back(nume_cupon, procent_reducere_cupon);
+    }
 
     void adauga_client(const class client &client) {
         clienti.push_back(client);
@@ -223,6 +229,35 @@ public:
         return fondator;
     }
 
+    bool verifica_pret_abonament(class client client)
+    {
+        for(auto & j : abonamente)
+            if(client.getAbonament().getNume() == j.getNume() && client.getAbonament().getPret() < j.getPret())
+                return true;
+        return false;
+
+    }
+
+    void reducere(class client &client, const std::string& nume_cupon)
+    {
+
+        for(int i = 0; i < cupoane.size(); i++)
+            if(cupoane[i].first == nume_cupon)
+            {
+                if(verifica_pret_abonament(client))
+                {
+                    std::cout << "Clientul dispune de o reducere! \n";
+                    break;
+                }
+                float pret_nou = client.getAbonament().getPret();
+                pret_nou = pret_nou - (float)cupoane[i].second * pret_nou / 100;
+                client.getAbonament().setPret(pret_nou);
+                break;
+            } else if (i == cupoane.size() - 1)
+                std::cout << "Nu exista un astfel de cupon!\n";
+
+    }
+
     ~aplicatie() {
         std::cout << "\nDestructor";
     }
@@ -246,17 +281,20 @@ int main () {
                   {"Antrenamente online"s, "Intrare libera la orice sala partenera"s, "8 sedinte cu antrenor personal"s,
                    "diete personalizate"s});
     client marius{"Marius"s, 21, "123456"s, incepator};
-    aplicatie AppGym{{worldclass},{marius},{incepator},"Work Smart","Nastase Marius"};
+    aplicatie AppGym{{worldclass},{marius},{incepator},"Work Smart","Nastase Marius",{{"student",10}}};
     AppGym.adauga_gym(energymhealth_hub);
     AppGym.adauga_gym(anturaj_gym);
     AppGym.aduaga_abonament(avansat);
     AppGym.aduaga_abonament(VIP);
+    AppGym.adauga_cupon("elev",15);
+    AppGym.adauga_cupon("happy hour",10);
     std::cout<<AppGym.getNume()<<"\n";
     std::cout<<"Fondatorul aplicatiei este: "<<AppGym.getFondator()<<"\n";
     AppGym.afis();
     marius.schimba_parola();
     marius.schimba_abonament(VIP);
-    //marius.reducere(20);
+    AppGym.reducere(marius,"student");
+    AppGym.reducere(marius,"student");
+    AppGym.reducere(marius,"tataie");
     std::cout << marius.getAbonament();
-
 }
