@@ -297,5 +297,4 @@ int main () {
     AppGym.reducere(marius,"student");
     AppGym.reducere(marius,"tataie");
     std::cout << marius.getAbonament();
-    sasasa
 }
