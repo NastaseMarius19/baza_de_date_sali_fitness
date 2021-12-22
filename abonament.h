@@ -29,11 +29,6 @@ public:
 
     void setPret(float pret);
 
-    void setNume(const std::string &nume);
-
-    const std::vector<std::string> &getBonusuri() const;
-
-    void setBonusuri(const std::vector<std::string> &bonusuri);
 };
 
 

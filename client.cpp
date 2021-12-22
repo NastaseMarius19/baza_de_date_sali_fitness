@@ -4,14 +4,8 @@
 
 #include "client.h"
 
-client::client(std::string userName, int varsta, std::string parola, const class abonament &abonament) : userName(std::move(userName)),
-                                                                                                   varsta(varsta),
-                                                                                                   parola(std::move(parola)),
-                                                                                                   abonament(
-                                                                                                           abonament) {}
-
 std::ostream &operator<<(std::ostream &os, const client &client) {
-    os << "name: " << client.userName << " varsta: " << client.varsta << " gen: " << client.parola << "\nabonament: " << client.abonament;
+    os << "name: " << client.userName << " varsta: " << client.varsta << " gen: " << client.parola << "\nabonament: " << client.abonament << "\nnumar kilograme: " << client.nr_kilograme ;
     return os;
 }
 
@@ -37,7 +31,7 @@ void client::schimba_parola() {
         std::cin >> parola_noua_verificare;
         if(parola_noua == parola_noua_verificare)
         {
-            parola = parola_noua;
+            parola = HashPassword(parola_noua);
             std::cout << "Parola noua setata!\n";
             break;
         }
@@ -47,6 +41,19 @@ void client::schimba_parola() {
 
 }
 
-const std::string &client::getParola() const {
-    return parola;
+
+int client::HashPassword(const std::string &Combine) {
+    unsigned int hash = 0;
+
+    const unsigned int VALUE = Combine.length();
+    for (auto Letter : Combine)
+    {
+        srand(VALUE*Letter);
+        hash += 33 + rand() % 92;
+    }
+    parola = hash;
+    return hash;
 }
+
+client::client(const std::string &userName, int varsta, int parola, const class abonament &abonament, int nrKilograme)
+        : userName(userName), varsta(varsta), parola(parola), abonament(abonament), nr_kilograme(nrKilograme) {}

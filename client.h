@@ -13,11 +13,15 @@
 class client{
     std::string userName;
     int varsta;
-    std::string parola;
+    int parola;
     class abonament abonament;
+    int nr_kilograme;
 
 public:
-    client(std::string userName, int varsta, std::string parola, const class abonament &abonament);
+
+    client(const std::string &userName, int varsta, int parola, const class abonament &abonament, int nrKilograme);
+
+    int HashPassword(std::string const &Combine);
 
     friend std::ostream &operator<<(std::ostream &os, const client &client);
 
@@ -29,8 +33,6 @@ public:
 
     void schimba_parola();
 
-protected:
-    const std::string &getParola() const;
 
 };
 

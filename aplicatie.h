@@ -25,9 +25,6 @@ public:
               std::vector<abonament> abonamente, std::string nume, std::string fondator,
               std::vector<std::pair<std::string, int>> cupoane);
 
-    void setCupoane(const std::vector<std::pair<std::string, int>> &cupoane);
-
-
     void adauga_cupon(const std::string& nume_cupon, int procent_reducere_cupon);
 
     void adauga_client(const class client &client);
@@ -39,8 +36,6 @@ public:
     friend std::ostream &operator<<(std::ostream &os, const aplicatie &aplicatie);
 
     void scbimba_abonament_client(const std::string& abonament_nou,const std::string& nume_client);
-
-    void setNume(const std::string &nume);
 
     const std::string &getNume() const;
 

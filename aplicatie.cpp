@@ -9,10 +9,6 @@ aplicatie::aplicatie(std::vector<gym> gyms, std::vector<client> clienti, std::ve
                                                                                                                  abonamente(std::move(abonamente)), nume(std::move(nume)),
                                                                                                                  fondator(std::move(fondator)), cupoane(std::move(cupoane)) {}
 
-void aplicatie::setCupoane(const std::vector<std::pair<std::string, int>> &cupoane) {
-    aplicatie::cupoane = cupoane;
-}
-
 void aplicatie::adauga_cupon(const std::string &nume_cupon, int procent_reducere_cupon) {
     cupoane.emplace_back(nume_cupon, procent_reducere_cupon);
 }
@@ -53,10 +49,6 @@ void aplicatie::scbimba_abonament_client(const std::string &abonament_nou, const
             }
         }
     std::cout << "Ati introdus un abonament invalid.";
-}
-
-void aplicatie::setNume(const std::string &nume) {
-    aplicatie::nume = nume;
 }
 
 const std::string &aplicatie::getNume() const {

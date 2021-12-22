@@ -4,6 +4,10 @@
 #include "abonament.h"
 #include "client.h"
 #include "aplicatie.h"
+#include "dieta_standard.h"
+#include "dieta_deficit_caloric.h"
+#include "dieta_surplus_caloric.h"
+#include "dieta_mentinere.h"
 
 using namespace std::string_literals;
 
@@ -25,8 +29,11 @@ int main () {
     abonament VIP(300, "VIP",
                   {"Antrenamente online"s, "Intrare libera la orice sala partenera"s, "8 sedinte cu antrenor personal"s,
                    "diete personalizate"s});
-    client marius{"Marius"s, 21, "123456"s, incepator};
+    client marius{"marius"s,21,marius.HashPassword("123456"),incepator,55};
+    client viorel{"viorel"s,19,viorel.HashPassword("mamaliga"),incepator,50};
     aplicatie AppGym{{worldclass},{marius},{incepator},"Work Smart","Nastase Marius",{{"student",10}}};
+    AppGym.scbimba_abonament_client("VIP","marius"s);
+    AppGym.adauga_client(viorel);
     AppGym.adauga_gym(energymhealth_hub);
     AppGym.adauga_gym(anturaj_gym);
     AppGym.aduaga_abonament(avansat);
@@ -42,4 +49,19 @@ int main () {
     AppGym.reducere(marius,"student");
     AppGym.reducere(marius,"tataie");
     std::cout << marius.getAbonament();
+
+    dieta_standard dieta1{2000,ENDOMORF};
+    dieta_deficit_caloric dieta2{0,ECTOMORF,"deficit caloric"};
+    dieta2.calc_necesar_caloric();
+    std::cout<<std::endl;
+    dieta2.afis();
+    dieta_surplus_caloric dieta3{0,ECTOMORF,"surplus caloric"s};
+    dieta3.calc_necesar_caloric();
+    std::cout<<std::endl;
+    dieta3.afis();
+    std::cout<<std::endl;
+    dieta_mentinere dieta4{0,MEZOMORF,"dieta mentinere"};
+    dieta4.calc_necesar_caloric();
+    dieta4.afis();
+    std::cout<<std::endl;
 }

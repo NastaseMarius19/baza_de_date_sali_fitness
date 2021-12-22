@@ -41,14 +41,3 @@ void abonament::setPret(float pret) {
     abonament::pret = pret;
 }
 
-void abonament::setNume(const std::string &nume) {
-    abonament::nume = nume;
-}
-
-const std::vector<std::string> &abonament::getBonusuri() const {
-    return bonusuri;
-}
-
-void abonament::setBonusuri(const std::vector<std::string> &bonusuri) {
-    abonament::bonusuri = bonusuri;
-}
