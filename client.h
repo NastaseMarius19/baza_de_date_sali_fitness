@@ -9,19 +9,19 @@
 #include <string>
 #include "abonament.h"
 #include <iostream>
+#include "HashPassword.h"
 
 class client{
     std::string userName;
     int varsta;
-    int parola;
+    unsigned int parola;
     class abonament abonament;
-    int nr_kilograme;
+    float nr_kilograme;
+
 
 public:
 
-    client(const std::string &userName, int varsta, int parola, const class abonament &abonament, int nrKilograme);
-
-    int HashPassword(std::string const &Combine);
+    client(std::string userName, int varsta,unsigned int parola, const class abonament &abonament, float nrKilograme);
 
     friend std::ostream &operator<<(std::ostream &os, const client &client);
 
@@ -29,10 +29,13 @@ public:
 
     class abonament &getAbonament();
 
+    float getNrKilograme() const;
+
     void schimba_abonament(class abonament &abonament_nou);
 
     void schimba_parola();
 
+    friend unsigned int HashPassword(std::string const &Combine);
 
 };
 

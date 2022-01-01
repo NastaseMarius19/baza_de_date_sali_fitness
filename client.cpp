@@ -4,6 +4,7 @@
 
 #include "client.h"
 
+
 std::ostream &operator<<(std::ostream &os, const client &client) {
     os << "name: " << client.userName << " varsta: " << client.varsta << " gen: " << client.parola << "\nabonament: " << client.abonament << "\nnumar kilograme: " << client.nr_kilograme ;
     return os;
@@ -38,22 +39,11 @@ void client::schimba_parola() {
 
         else
             std::cout << "Parola noua nu este aceeasi in ambele campuri, incercati din nou(mai aveti "<<3-i<<" incercari)!\n"; }
-
 }
 
+client::client(std::string userName, int varsta,unsigned int parola, const class abonament &abonament, float nrKilograme)
+        : userName(std::move(userName)), varsta(varsta), parola(parola), abonament(abonament), nr_kilograme(nrKilograme) {}
 
-int client::HashPassword(const std::string &Combine) {
-    unsigned int hash = 0;
-
-    const unsigned int VALUE = Combine.length();
-    for (auto Letter : Combine)
-    {
-        srand(VALUE*Letter);
-        hash += 33 + rand() % 92;
-    }
-    parola = hash;
-    return hash;
+float client::getNrKilograme() const {
+    return nr_kilograme;
 }
-
-client::client(const std::string &userName, int varsta, int parola, const class abonament &abonament, int nrKilograme)
-        : userName(userName), varsta(varsta), parola(parola), abonament(abonament), nr_kilograme(nrKilograme) {}

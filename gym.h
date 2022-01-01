@@ -22,13 +22,7 @@ public:
 
     friend std::ostream &operator<<(std::ostream &os, const gym &gym);
 
-    void adauga(std::vector<std::pair<std::string, std::string>> &days);
-
     const std::string &getName() const;
-
-    const std::string &getLocation() const;
-
-    const std::vector<std::pair<std::string, std::string>> &getProgram() const;
 
 };
 

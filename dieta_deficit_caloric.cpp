@@ -3,37 +3,19 @@
 //
 
 #include "dieta_deficit_caloric.h"
+#include "client.h"
 
-
-void dieta_deficit_caloric::afis() {
-    std::cout << "Necesarul caloric este: " << getNecesarCaloric() << std::endl;
-    switch(getTipSomatic()){
-        case tip_somatic::ECTOMORF:
-            std::cout << "Tipul somatic este: ECTOMORF" << std::endl;
-            break;
-        case tip_somatic::ENDOMORF:
-            std::cout << "Tipul somatic este: ENDOMORF" << std::endl;
-            break;
-        case tip_somatic::MEZOMORF:
-            std::cout << "Tipul somatic este: MEZOMORF" << std::endl;
-            break;
-    }
-    std::cout << "Tip dieta : " <<  tip_dieta << std::endl;
-}
-
-dieta_deficit_caloric::dieta_deficit_caloric(int necesarCaloric, tip_somatic tipSomatic, std::string tipDieta)
-        : dieta_standard(necesarCaloric, tipSomatic), tip_dieta(std::move(tipDieta)) {}
 
 void dieta_deficit_caloric::calc_necesar_caloric() {
     switch(getTipSomatic()){
         case tip_somatic::ECTOMORF:
-            setNecesarCaloric(1900);
+            necesar_caloric = 1900;
             break;
         case tip_somatic::ENDOMORF:
-            setNecesarCaloric(1500);
+            necesar_caloric = 1500;
             break;
         case tip_somatic::MEZOMORF:
-            setNecesarCaloric(1700);
+            necesar_caloric = 1700;
             break;
     }
 }
@@ -41,5 +23,18 @@ void dieta_deficit_caloric::calc_necesar_caloric() {
 
 dieta_deficit_caloric::~dieta_deficit_caloric() {
     std::cout << "destr dieta deficit caloric\n";
+}
+
+float dieta_deficit_caloric::calc_necesar_proteic(class client& client) {
+    necesar_proteic = static_cast<float >(0.8 * client.getNrKilograme());
+    return necesar_proteic;
+}
+
+dieta_deficit_caloric::dieta_deficit_caloric(tip_somatic tipSomatic, int necesarCaloric,
+                                             const std::string &tipDieta, float necesarProteic) : dieta_standard(
+        tipSomatic, necesarCaloric, tipDieta, necesarProteic) {}
+
+std::shared_ptr<dieta_standard> dieta_deficit_caloric::clone() const {
+    return std::make_shared<dieta_deficit_caloric>(*this);
 }
 

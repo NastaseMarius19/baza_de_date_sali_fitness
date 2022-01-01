@@ -37,7 +37,7 @@ float abonament::getPret() const {
     return pret;
 }
 
-void abonament::setPret(float pret) {
-    abonament::pret = pret;
+void abonament::setPret(float pret_) {
+    abonament::pret = pret_;
 }
 

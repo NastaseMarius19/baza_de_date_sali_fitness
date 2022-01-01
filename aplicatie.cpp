@@ -4,6 +4,7 @@
 
 #include "aplicatie.h"
 
+
 aplicatie::aplicatie(std::vector<gym> gyms, std::vector<client> clienti, std::vector<abonament> abonamente,
                      std::string nume, std::string fondator, std::vector<std::pair<std::string, int>> cupoane) : gyms(std::move(gyms)), clienti(std::move(clienti)),
                                                                                                                  abonamente(std::move(abonamente)), nume(std::move(nume)),
@@ -36,6 +37,9 @@ std::ostream &operator<<(std::ostream &os, const aplicatie &aplicatie) {
     std::cout << "\nabonamente dispinibile:\n";
     for(const auto &abonament : aplicatie.abonamente)
         std::cout << abonament.getNume() << "\n";
+    std::cout << "\nexemple de diete:\n";
+    for(const auto &dieta : aplicatie.diete)
+        dieta->afis();
     return os;
 }
 
@@ -59,7 +63,7 @@ const std::string &aplicatie::getFondator() const {
     return fondator;
 }
 
-bool aplicatie::verifica_pret_abonament(struct client client) {
+bool aplicatie::verifica_pret_abonament(class client client) {
     for(auto & j : abonamente)
         if(client.getAbonament().getNume() == j.getNume() && client.getAbonament().getPret() < j.getPret())
             return true;
@@ -88,4 +92,10 @@ void aplicatie::reducere(client &client, const std::string &nume_cupon) {
 
 aplicatie::~aplicatie() {
     std::cout << "\nDestructor";
+}
+
+aplicatie::aplicatie(std::vector<std::shared_ptr<dieta_standard>> diete) : diete(std::move(diete)) {}
+
+void aplicatie::adauga_dieta(const dieta_standard &dietaStandard) {
+    diete.push_back(dietaStandard.clone());
 }

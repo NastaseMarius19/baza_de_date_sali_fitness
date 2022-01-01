@@ -3,24 +3,37 @@
 //
 
 #include "dieta_mentinere.h"
-
-dieta_mentinere::dieta_mentinere(int necesarCaloric, tip_somatic tipSomatic, const std::string &tipDieta)
-        : dieta_deficit_caloric(necesarCaloric, tipSomatic, tipDieta) {}
+#include "client.h"
 
 void dieta_mentinere::calc_necesar_caloric() {
     switch(getTipSomatic()){
         case tip_somatic::ECTOMORF:
-            setNecesarCaloric(2000);
+            necesar_caloric = 2000;
             break;
         case tip_somatic::ENDOMORF:
-            setNecesarCaloric(2400);
+            necesar_caloric = 2400;
             break;
         case tip_somatic::MEZOMORF:
-            setNecesarCaloric(2200);
+            necesar_caloric = 2200;
             break;
     }
 }
 
 dieta_mentinere::~dieta_mentinere() {
     std::cout << "destr dieta mentinere \n";
+}
+
+float dieta_mentinere::calc_necesar_proteic(class client& client) {
+    necesar_proteic = static_cast<float >(0.8 * client.getNrKilograme());
+    return necesar_proteic;
+}
+
+dieta_mentinere::dieta_mentinere(tip_somatic tipSomatic, int necesarCaloric,
+                                 const std::string &tipDieta, float necesarProteic) : dieta_standard(tipSomatic,
+                                                                                                     necesarCaloric,
+                                                                                                     tipDieta,
+                                                                                                     necesarProteic) {}
+
+std::shared_ptr<dieta_standard> dieta_mentinere::clone() const {
+    return std::make_shared<dieta_mentinere>(*this);
 }

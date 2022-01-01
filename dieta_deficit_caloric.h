@@ -11,15 +11,19 @@
 #include <vector>
 
 class dieta_deficit_caloric : public dieta_standard {
-    std::string tip_dieta;
+
 public:
-    dieta_deficit_caloric(int necesarCaloric, tip_somatic tipSomatic, std::string tipDieta);
 
-    virtual void calc_necesar_caloric();
+    dieta_deficit_caloric(tip_somatic tipSomatic, int necesarCaloric, const std::string &tipDieta,
+                          float necesarProteic);
 
-    virtual void afis();
+    void calc_necesar_caloric();
 
-    ~dieta_deficit_caloric() ;
+    float calc_necesar_proteic(class client& client) override;
+
+    std::shared_ptr<dieta_standard> clone() const override;
+
+    ~dieta_deficit_caloric() override;
 
 };
 

@@ -6,15 +6,20 @@
 #define MAIN_CPP_DIETA_MENTINERE_H
 
 
-#include "dieta_deficit_caloric.h"
+#include "dieta_standard.h"
 
-class dieta_mentinere final : public dieta_deficit_caloric{
+class dieta_mentinere final : public dieta_standard{
 public:
-    dieta_mentinere(int necesarCaloric, tip_somatic tipSomatic, const std::string &tipDieta);
+    dieta_mentinere(tip_somatic tipSomatic, int necesarCaloric, const std::string &tipDieta,
+                    float necesarProteic);
 
-    void calc_necesar_caloric() final;
+    void calc_necesar_caloric() ;
 
-    ~dieta_mentinere() final;
+    float calc_necesar_proteic(class client& client) override;
+
+    std::shared_ptr<dieta_standard> clone() const override;
+
+    ~dieta_mentinere() override;
 };
 
 

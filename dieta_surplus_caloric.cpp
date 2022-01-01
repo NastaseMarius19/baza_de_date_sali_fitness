@@ -3,17 +3,18 @@
 //
 
 #include "dieta_surplus_caloric.h"
+#include "client.h"
 
 void dieta_surplus_caloric::calc_necesar_caloric() {
     switch(getTipSomatic()){
         case tip_somatic::ECTOMORF:
-            setNecesarCaloric(3500);
+            necesar_caloric = 3500;
             break;
         case tip_somatic::ENDOMORF:
-            setNecesarCaloric(3000);
+            necesar_caloric = 3000;
             break;
         case tip_somatic::MEZOMORF:
-            setNecesarCaloric(3200);
+            necesar_caloric = 3200;
             break;
     }
 }
@@ -24,5 +25,17 @@ dieta_surplus_caloric::~dieta_surplus_caloric() {
     std::cout << "destructor surplus caloric\n";
 }
 
-dieta_surplus_caloric::dieta_surplus_caloric(int necesarCaloric, tip_somatic tipSomatic, const std::string &tipDieta)
-        : dieta_deficit_caloric(necesarCaloric, tipSomatic, tipDieta) {}
+
+float dieta_surplus_caloric::calc_necesar_proteic(class client& client) {
+    necesar_proteic = static_cast<float >(0.8 * client.getNrKilograme());
+    return necesar_proteic;
+}
+
+dieta_surplus_caloric::dieta_surplus_caloric(tip_somatic tipSomatic, int necesarCaloric,
+                                             const std::string &tipDieta, float necesarProteic) : dieta_standard(
+        tipSomatic, necesarCaloric, tipDieta, necesarProteic) {}
+
+std::shared_ptr<dieta_standard> dieta_surplus_caloric::clone() const {
+    return std::make_shared<dieta_surplus_caloric>(*this);
+}
+

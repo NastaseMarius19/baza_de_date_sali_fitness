@@ -2,9 +2,7 @@
 #include <string>
 #include "gym.h"
 #include "abonament.h"
-#include "client.h"
 #include "aplicatie.h"
-#include "dieta_standard.h"
 #include "dieta_deficit_caloric.h"
 #include "dieta_surplus_caloric.h"
 #include "dieta_mentinere.h"
@@ -29,8 +27,8 @@ int main () {
     abonament VIP(300, "VIP",
                   {"Antrenamente online"s, "Intrare libera la orice sala partenera"s, "8 sedinte cu antrenor personal"s,
                    "diete personalizate"s});
-    client marius{"marius"s,21,marius.HashPassword("123456"),incepator,55};
-    client viorel{"viorel"s,19,viorel.HashPassword("mamaliga"),incepator,50};
+    client marius{"marius"s, 21, HashPassword("marius"), incepator, 55};
+    client viorel{"viorel"s, 19, HashPassword("mamaliga"), incepator, 50};
     aplicatie AppGym{{worldclass},{marius},{incepator},"Work Smart","Nastase Marius",{{"student",10}}};
     AppGym.scbimba_abonament_client("VIP","marius"s);
     AppGym.adauga_client(viorel);
@@ -50,18 +48,23 @@ int main () {
     AppGym.reducere(marius,"tataie");
     std::cout << marius.getAbonament();
 
-    dieta_standard dieta1{2000,ENDOMORF};
-    dieta_deficit_caloric dieta2{0,ECTOMORF,"deficit caloric"};
+    dieta_standard dieta1{ENDOMORF,0,"standard client - marius"s,dieta1.calc_necesar_proteic(marius)};
+    dieta_deficit_caloric dieta2{ECTOMORF,0,"deficit _caloric -viorel"s,dieta2.calc_necesar_proteic(viorel)};
     dieta2.calc_necesar_caloric();
     std::cout<<std::endl;
     dieta2.afis();
-    dieta_surplus_caloric dieta3{0,ECTOMORF,"surplus caloric"s};
+    dieta_surplus_caloric dieta3{ECTOMORF,0,"surplus caloric - marius"s,dieta3.calc_necesar_proteic(marius)};
     dieta3.calc_necesar_caloric();
     std::cout<<std::endl;
     dieta3.afis();
     std::cout<<std::endl;
-    dieta_mentinere dieta4{0,MEZOMORF,"dieta mentinere"};
+    dieta_mentinere dieta4{MEZOMORF,0,"mentinere - marius"s,dieta4.calc_necesar_proteic(marius)};
     dieta4.calc_necesar_caloric();
     dieta4.afis();
     std::cout<<std::endl;
+
+    AppGym.adauga_dieta(dieta1);
+    AppGym.adauga_dieta(dieta2);
+    AppGym.adauga_dieta(dieta3);
+    std::cout<<AppGym;
 }

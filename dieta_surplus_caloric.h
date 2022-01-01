@@ -7,15 +7,19 @@
 
 
 #include "dieta_standard.h"
-#include "dieta_deficit_caloric.h"
 
-class dieta_surplus_caloric : public dieta_deficit_caloric{
+class dieta_surplus_caloric : public dieta_standard{
 public:
-    dieta_surplus_caloric(int necesarCaloric, tip_somatic tipSomatic, const std::string &tipDieta);
+    dieta_surplus_caloric(tip_somatic tipSomatic, int necesarCaloric, const std::string &tipDieta,
+                          float necesarProteic);
 
     void calc_necesar_caloric() ;
 
-    ~dieta_surplus_caloric() ;
+    float calc_necesar_proteic(class client& client) override;
+
+    std::shared_ptr<dieta_standard> clone() const override;
+
+    ~dieta_surplus_caloric() override;
 };
 
 

@@ -12,20 +12,7 @@ std::ostream &operator<<(std::ostream &os, const gym &gym) {
     return os;
 }
 
-void gym::adauga(std::vector<std::pair<std::string, std::string>> &days) {
-    for(auto const & day : days)
-        program.push_back(day);
-
-}
 
 const std::string &gym::getName() const {
     return name;
-}
-
-const std::string &gym::getLocation() const {
-    return location;
-}
-
-const std::vector<std::pair<std::string, std::string>> &gym::getProgram() const {
-    return program;
 }

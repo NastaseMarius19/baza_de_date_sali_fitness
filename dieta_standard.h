@@ -7,24 +7,32 @@
 
 
 #include <iostream>
+#include <memory>
 
 enum tip_somatic{
     ENDOMORF, MEZOMORF, ECTOMORF
 }; // in functie de tipul somatic se va calcula necesarul caloric pentru diferite categorii de persoane
 
 class dieta_standard {
-    int necesar_caloric = 0;
     tip_somatic tipSomatic;
+
+protected:
+    int necesar_caloric = 0;
+    std::string tip_dieta;
+    float necesar_proteic = 0;
 
 public:
 
-    void setNecesarCaloric(int necesarCaloric);
-
     tip_somatic getTipSomatic() const;
 
-    int getNecesarCaloric() const;
+    void afis();
 
-    dieta_standard(int necesarCaloric, tip_somatic tipSomatic);
+    dieta_standard(tip_somatic tipSomatic, int necesarCaloric, std::string tipDieta,
+                   float necesarProteic);
+
+    virtual float calc_necesar_proteic(class client& client);
+
+    virtual std::shared_ptr<dieta_standard> clone() const;
 
     virtual ~dieta_standard();
 };
