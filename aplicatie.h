@@ -30,11 +30,13 @@ public:
 
     explicit aplicatie(std::vector<std::shared_ptr<dieta_standard>> diete);
 
-    void adauga_dieta(const dieta_standard& dietaStandard);;
+    void adauga_dieta(const dieta_standard& dietaStandard);
 
     void adauga_cupon(const std::string& nume_cupon, int procent_reducere_cupon);
 
     void adauga_client(const class client &client);
+
+    const std::vector<std::shared_ptr<dieta_standard>> &getDiete() const;
 
     void adauga_gym(const class gym &gym);
 

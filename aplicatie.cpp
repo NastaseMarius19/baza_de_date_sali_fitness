@@ -96,6 +96,10 @@ aplicatie::~aplicatie() {
 
 aplicatie::aplicatie(std::vector<std::shared_ptr<dieta_standard>> diete) : diete(std::move(diete)) {}
 
-void aplicatie::adauga_dieta(const dieta_standard &dietaStandard) {
-    diete.push_back(dietaStandard.clone());
+void aplicatie::adauga_dieta(const dieta_standard &dietaStandard_) {
+    diete.push_back(dietaStandard_.clone());
+}
+
+const std::vector<std::shared_ptr<dieta_standard>> &aplicatie::getDiete() const {
+    return diete;
 }

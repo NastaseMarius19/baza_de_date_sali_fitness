@@ -13,7 +13,7 @@ public:
     dieta_mentinere(tip_somatic tipSomatic, int necesarCaloric, const std::string &tipDieta,
                     float necesarProteic);
 
-    void calc_necesar_caloric() ;
+    void calc_necesar_caloric();
 
     float calc_necesar_proteic(class client& client) override;
 

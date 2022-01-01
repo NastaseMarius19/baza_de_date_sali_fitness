@@ -35,6 +35,11 @@ dieta_deficit_caloric::dieta_deficit_caloric(tip_somatic tipSomatic, int necesar
         tipSomatic, necesarCaloric, tipDieta, necesarProteic) {}
 
 std::shared_ptr<dieta_standard> dieta_deficit_caloric::clone() const {
-    return std::make_shared<dieta_deficit_caloric>(*this);
+    try {
+        return std::make_shared<dieta_deficit_caloric>(*this);
+    }catch (std::bad_alloc){
+        std::cout << "Allocation failure - dieta deficit caloric clone";
+        exit(EXIT_FAILURE);
+    }
 }
 

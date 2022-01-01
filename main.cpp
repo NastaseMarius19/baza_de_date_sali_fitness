@@ -48,23 +48,20 @@ int main () {
     AppGym.reducere(marius,"tataie");
     std::cout << marius.getAbonament();
 
-    dieta_standard dieta1{ENDOMORF,0,"standard client - marius"s,dieta1.calc_necesar_proteic(marius)};
-    dieta_deficit_caloric dieta2{ECTOMORF,0,"deficit _caloric -viorel"s,dieta2.calc_necesar_proteic(viorel)};
+    dieta_standard dieta1{ENDOMORF,0,"standard client - marius"s,0};
+    dieta_deficit_caloric dieta2{ECTOMORF,0,"deficit _caloric -viorel"s,0};
     dieta2.calc_necesar_caloric();
-    std::cout<<std::endl;
-    dieta2.afis();
-    dieta_surplus_caloric dieta3{ECTOMORF,0,"surplus caloric - marius"s,dieta3.calc_necesar_proteic(marius)};
+    dieta_surplus_caloric dieta3{ECTOMORF,0,"surplus caloric - marius"s,0};
     dieta3.calc_necesar_caloric();
-    std::cout<<std::endl;
-    dieta3.afis();
-    std::cout<<std::endl;
-    dieta_mentinere dieta4{MEZOMORF,0,"mentinere - marius"s,dieta4.calc_necesar_proteic(marius)};
+    dieta_mentinere dieta4{MEZOMORF,0,"mentinere - marius"s,0};
     dieta4.calc_necesar_caloric();
-    dieta4.afis();
-    std::cout<<std::endl;
 
-    AppGym.adauga_dieta(dieta1);
     AppGym.adauga_dieta(dieta2);
     AppGym.adauga_dieta(dieta3);
+    AppGym.adauga_dieta(dieta4);
+    AppGym.getDiete()[0]->calc_necesar_proteic(viorel);
+    AppGym.getDiete()[1]->calc_necesar_proteic(marius);
+    AppGym.getDiete()[2]->calc_necesar_proteic(marius);
+
     std::cout<<AppGym;
 }

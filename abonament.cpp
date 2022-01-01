@@ -2,10 +2,19 @@
 // Created by orange on 12/18/2021.
 //
 
+#include <memory>
 #include "abonament.h"
+#include "erori_abonament.h"
 
+int abonament::nr_abonamente = 1;
 abonament::abonament(float pret, std::string nume, std::vector<std::string> bonusuri) : pret(pret), nume(std::move(nume)),
-                                                                                        bonusuri(std::move(bonusuri)) {}
+                                                                                        bonusuri(std::move(bonusuri)) {
+    nr_abonamente++;
+    if(pret < 80)
+        throw eroare_pret_abonament();
+    if(bonusuri.size() == 1)
+        throw eroare_bonusuri_abonament();
+}
 
 std::ostream &operator<<(std::ostream &os, const abonament &abonament) {
     os << "pret: " << abonament.pret << "\nnume: " << abonament.nume << "\nbonusuri:\n ";
@@ -15,11 +24,13 @@ std::ostream &operator<<(std::ostream &os, const abonament &abonament) {
 }
 
 abonament &abonament::operator=(const abonament &copie) {
-    this->nume = copie.nume;
-    this->pret = copie.pret;
-    for(const auto &bonus : copie.bonusuri)
-        this->bonusuri.push_back(bonus);
-    return *this;
+    if(this != &copie){
+      this->nume = copie.nume;
+      this->pret = copie.pret;
+      for(const auto &bonus : copie.bonusuri)
+      this->bonusuri.push_back(bonus);
+    }
+      return *this;
 }
 
 abonament::abonament(const abonament &copie) {

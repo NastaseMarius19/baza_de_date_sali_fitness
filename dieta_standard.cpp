@@ -34,10 +34,17 @@ void dieta_standard::afis() {
             break;
     }
     std::cout << "Tip dieta : " <<  tip_dieta << std::endl;
+    std::cout << "Necesarul proteic este: " << necesar_proteic << std::endl;
 }
 
 dieta_standard::~dieta_standard() {std::cout << "destr dieta_standard\n";}
 
 std::shared_ptr<dieta_standard> dieta_standard::clone() const {
-    return std::make_shared<dieta_standard>(*this);
+    try {
+        return std::make_shared<dieta_standard>(*this);
+    }catch (std::bad_alloc){
+        std::cout << "Allocation failure - dieta standard clone";
+        exit(EXIT_FAILURE);
+    }
 }
+

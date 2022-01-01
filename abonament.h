@@ -14,7 +14,10 @@ class abonament{
     float pret;
     std::string nume;
     std::vector<std::string> bonusuri;
+    static int nr_abonamente;
+
 public:
+
     abonament(float pret, std::string nume, std::vector<std::string> bonusuri);
 
     friend std::ostream &operator<<(std::ostream &os, const abonament &abonament);
