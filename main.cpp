@@ -6,11 +6,21 @@
 #include "dieta_deficit_caloric.h"
 #include "dieta_surplus_caloric.h"
 #include "dieta_mentinere.h"
+#include "erori_abonament.h"
 
 using namespace std::string_literals;
 
 
 int main () {
+
+    try{
+        abonament special(30,"special"s,{"4 sedinte cu antrenor"s,"10% reducere luna urmatoare"s});
+    }catch (eroare_abonament& error)
+    {
+        std::cout << error.what() << "\n";
+    }
+
+    std::cout << "\n";
     gym worldclass{"WordlClass"s, "Str.Soarelui Nr.25"s,
                    {{"Luni", "8:00-22:00"}, {"Marti", "8:00-22:00"}, {"Miercuri", "8:00-22:00"}, {"Joi", "8:00-22:00"},
                     {"Vineri", "8:00-22:00"}, {"Sambata", "10:00-16:00"}, {"Duminica", "INCHIS"}}};
@@ -30,7 +40,7 @@ int main () {
     client marius{"marius"s, 21, HashPassword("marius"), incepator, 55};
     client viorel{"viorel"s, 19, HashPassword("mamaliga"), incepator, 50};
     aplicatie AppGym{{worldclass},{marius},{incepator},"Work Smart","Nastase Marius",{{"student",10}}};
-    AppGym.scbimba_abonament_client("VIP","marius"s);
+    AppGym.scbimba_abonament_client("Incepator","marius"s);
     AppGym.adauga_client(viorel);
     AppGym.adauga_gym(energymhealth_hub);
     AppGym.adauga_gym(anturaj_gym);
@@ -62,6 +72,9 @@ int main () {
     AppGym.getDiete()[0]->calc_necesar_proteic(viorel);
     AppGym.getDiete()[1]->calc_necesar_proteic(marius);
     AppGym.getDiete()[2]->calc_necesar_proteic(marius);
+
+
+
 
     std::cout<<AppGym;
 }

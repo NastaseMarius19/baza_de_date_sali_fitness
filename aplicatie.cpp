@@ -47,12 +47,13 @@ void aplicatie::scbimba_abonament_client(const std::string &abonament_nou, const
     for(auto& client:clienti)
         if(client.getName() == nume_client) {
             for (auto &abonament : abonamente) {
-                if (abonament.getNume() == abonament_nou)
+                if (abonament.getNume() == abonament_nou){
                     client.schimba_abonament(abonament);
                 break;
+                }
             }
+            break;
         }
-    std::cout << "Ati introdus un abonament invalid.";
 }
 
 const std::string &aplicatie::getNume() const {
