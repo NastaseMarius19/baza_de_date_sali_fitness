@@ -1,5 +1,4 @@
 Proiect POO
 
 ## Resurse
-
 <>
