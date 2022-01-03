@@ -37,7 +37,7 @@ dieta_mentinere::dieta_mentinere(tip_somatic tipSomatic, int necesarCaloric,
 std::shared_ptr<dieta_standard> dieta_mentinere::clone() const {
     try {
         return std::make_shared<dieta_mentinere>(*this);
-    }catch (std::bad_alloc){
+    }catch (std::bad_alloc const&){
         std::cout << "Allocation failure - dieta mentinere clone";
         exit(EXIT_FAILURE);
     }

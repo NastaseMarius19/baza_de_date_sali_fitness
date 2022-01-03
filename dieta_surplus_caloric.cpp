@@ -38,7 +38,7 @@ dieta_surplus_caloric::dieta_surplus_caloric(tip_somatic tipSomatic, int necesar
 std::shared_ptr<dieta_standard> dieta_surplus_caloric::clone() const {
     try {
         return std::make_shared<dieta_surplus_caloric>(*this);
-    }catch (std::bad_alloc){
+    }catch (std::bad_alloc const&){
         std::cout << "Allocation failure - dieta surplus caloric clone";
         exit(EXIT_FAILURE);
     }
