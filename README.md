@@ -1,5 +1,4 @@
-Salut!
+Proiect POO
 
 ## Resurse
-
 <>
