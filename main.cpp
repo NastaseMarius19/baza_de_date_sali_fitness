@@ -28,12 +28,14 @@ int main () {
                           {"Duminica", "INCHIS"}}).build();
     gym anturaj_gym = gym_build.name("Anturaj_Gym"s).location("Str.Principala Bloc 8 Sc.A Et.4"s).program({{"Luni", "8:00-22:00"}, {"Marti", "8:00-22:00"}, {"Miercuri", "8:00-22:00"}, {"Joi", "8:00-22:00"},
                      {"Vineri", "8:00-22:00"}, {"Sambata", "INCHIS"}, {"Duminica", "INCHIS"}}).build();
+
     abonament incepator(140, "Incepator", {"Antrenamente online", "8 sedinte pe luna"s});
     abonament avansat(200, "Avansat", {"Antrenamente online"s, "O intrare pe zi la orice sala partenera"s,
                                        "4 sedinte cu antrenor personal"s});
     abonament VIP(300, "VIP",
                   {"Antrenamente online"s, "Intrare libera la orice sala partenera"s, "8 sedinte cu antrenor personal"s,
                    "diete personalizate"s});
+
     client<unsigned int> marius{"marius"s, 21, HashPassword("marius"), incepator, 55};
     client<unsigned int> viorel{"viorel"s, 19, HashPassword("mamaliga"), incepator, 50};
 
