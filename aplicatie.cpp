@@ -74,7 +74,7 @@ bool aplicatie::verifica_pret_abonament(class client client) {
 
 void aplicatie::reducere(client &client, const std::string &nume_cupon) {
 
-    for(int i = 0; i < cupoane.size(); i++)
+    for(unsigned long long i = 0; i < cupoane.size(); i++)
         if(cupoane[i].first == nume_cupon)
         {
             if(verifica_pret_abonament(client))
@@ -97,10 +97,13 @@ aplicatie::~aplicatie() {
 
 aplicatie::aplicatie(std::vector<std::shared_ptr<dieta_standard>> diete) : diete(std::move(diete)) {}
 
-void aplicatie::adauga_dieta(const dieta_standard &dietaStandard_) {
+void aplicatie::adauga_dieta(const dieta_standard& dietaStandard_) {
     diete.push_back(dietaStandard_.clone());
 }
 
 const std::vector<std::shared_ptr<dieta_standard>> &aplicatie::getDiete() const {
     return diete;
 }
+
+aplicatie* aplicatie::app = nullptr;
+

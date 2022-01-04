@@ -30,11 +30,11 @@ public:
     dieta_standard(tip_somatic tipSomatic, int necesarCaloric, std::string tipDieta,
                    float necesarProteic);
 
-    virtual float calc_necesar_proteic(class client& client);
+    virtual float calc_necesar_proteic(class client& client)  = 0;
 
-    virtual std::shared_ptr<dieta_standard> clone() const;
+    virtual std::shared_ptr<dieta_standard> clone() const = 0;
 
-    virtual ~dieta_standard();
+    virtual ~dieta_standard()  = 0;
 };
 
 

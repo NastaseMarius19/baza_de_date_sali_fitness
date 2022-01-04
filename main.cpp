@@ -7,7 +7,6 @@
 #include "dieta_surplus_caloric.h"
 #include "dieta_mentinere.h"
 #include "erori_abonament.h"
-
 using namespace std::string_literals;
 
 
@@ -39,26 +38,37 @@ int main () {
                    "diete personalizate"s});
     client marius{"marius"s, 21, HashPassword("marius"), incepator, 55};
     client viorel{"viorel"s, 19, HashPassword("mamaliga"), incepator, 50};
-    aplicatie AppGym{{worldclass},{marius},{incepator},"Work Smart","Nastase Marius",{{"student",10}}};
-    AppGym.scbimba_abonament_client("Incepator","marius"s);
-    AppGym.adauga_client(viorel);
-    AppGym.adauga_gym(energymhealth_hub);
-    AppGym.adauga_gym(anturaj_gym);
-    AppGym.aduaga_abonament(avansat);
-    AppGym.aduaga_abonament(VIP);
-    AppGym.adauga_cupon("elev",15);
-    AppGym.adauga_cupon("happy hour",10);
-    std::cout<<AppGym.getNume()<<"\n";
-    std::cout<<"Fondatorul aplicatiei este: "<<AppGym.getFondator()<<"\n";
-    std::cout<<AppGym;
+    //aplicatie AppGym{{worldclass},{marius},{incepator},"Work Smart","Nastase Marius",{{"student",10}}};
+
+    auto AppGym = aplicatie::get_app();
+    AppGym->aduaga_abonament(incepator);
+    AppGym->aduaga_abonament(avansat);
+    AppGym->aduaga_abonament(VIP);
+    AppGym->adauga_client(marius);
+    AppGym->adauga_client(viorel);
+    AppGym->adauga_gym(worldclass);
+    AppGym->adauga_gym(energymhealth_hub);
+    AppGym->adauga_gym(anturaj_gym);
+    AppGym->adauga_cupon("elev",15);
+    AppGym->adauga_cupon("happy hour",10);
+
+
+    AppGym->scbimba_abonament_client("Incepator","marius"s);
+//    AppGym->adauga_client(viorel);
+//    AppGym->adauga_gym(energymhealth_hub);
+//    AppGym->adauga_gym(anturaj_gym);
+//    AppGym->aduaga_abonament(avansat);
+    std::cout<<AppGym->getNume()<<"\n";
+//    AppGym->aduaga_abonament(VIP);
+    std::cout<<"Fondatorul aplicatiei este: "<<AppGym->getFondator()<<"\n";
+    std::cout << *AppGym;
     marius.schimba_parola();
     marius.schimba_abonament(VIP);
-    AppGym.reducere(marius,"student");
-    AppGym.reducere(marius,"student");
-    AppGym.reducere(marius,"tataie");
+    AppGym->reducere(marius,"student");
+    AppGym->reducere(marius,"student");
+    AppGym->reducere(marius,"tataie");
     std::cout << marius.getAbonament();
 
-    dieta_standard dieta1{ENDOMORF,0,"standard client - marius"s,0};
     dieta_deficit_caloric dieta2{ECTOMORF,0,"deficit _caloric -viorel"s,0};
     dieta2.calc_necesar_caloric();
     dieta_surplus_caloric dieta3{ECTOMORF,0,"surplus caloric - marius"s,0};
@@ -66,15 +76,12 @@ int main () {
     dieta_mentinere dieta4{MEZOMORF,0,"mentinere - marius"s,0};
     dieta4.calc_necesar_caloric();
 
-    AppGym.adauga_dieta(dieta2);
-    AppGym.adauga_dieta(dieta3);
-    AppGym.adauga_dieta(dieta4);
-    AppGym.getDiete()[0]->calc_necesar_proteic(viorel);
-    AppGym.getDiete()[1]->calc_necesar_proteic(marius);
-    AppGym.getDiete()[2]->calc_necesar_proteic(marius);
+    AppGym->adauga_dieta(dieta2);
+    AppGym->adauga_dieta(dieta3);
+    AppGym->adauga_dieta(dieta4);
+    AppGym->getDiete()[0]->calc_necesar_proteic(viorel);
+    AppGym->getDiete()[1]->calc_necesar_proteic(marius);
+    AppGym->getDiete()[2]->calc_necesar_proteic(marius);
 
-
-
-
-    std::cout<<AppGym;
+    std::cout << *AppGym;
 }

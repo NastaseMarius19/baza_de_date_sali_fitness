@@ -39,12 +39,12 @@ void dieta_standard::afis() {
 
 dieta_standard::~dieta_standard() {std::cout << "destr dieta_standard\n";}
 
-std::shared_ptr<dieta_standard> dieta_standard::clone() const {
-    try {
-        return std::make_shared<dieta_standard>(*this);
-    }catch (std::bad_alloc){
-        std::cout << "Allocation failure - dieta standard clone";
-        exit(EXIT_FAILURE);
-    }
-}
+//std::shared_ptr<dieta_standard> dieta_standard::clone() const {
+//    try {
+//        return std::make_shared<dieta_standard>(*this);
+//    }catch (std::bad_alloc){
+//        std::cout << "Allocation failure - dieta standard clone";
+//        exit(EXIT_FAILURE);
+//    }
+//}
 

@@ -22,13 +22,23 @@ class aplicatie{
     std::vector<std::pair<std::string, int >> cupoane;
     std::vector<std::shared_ptr<dieta_standard>> diete;
 
-
-public:
+private:
     aplicatie(std::vector<gym> gyms, std::vector<client> clienti,
               std::vector<abonament> abonamente, std::string nume, std::string fondator,
               std::vector<std::pair<std::string, int>> cupoane);
 
     explicit aplicatie(std::vector<std::shared_ptr<dieta_standard>> diete);
+
+    static aplicatie* app;
+
+
+public:
+    aplicatie(const aplicatie&) = delete;
+    aplicatie& operator=(const aplicatie&) = delete;
+    static aplicatie* get_app(){
+        if(app == nullptr) { app = new aplicatie{{},{},{},"Work smart","Nastase Marius",{}};}
+        return app;
+    }
 
     void adauga_dieta(const dieta_standard& dietaStandard);
 
