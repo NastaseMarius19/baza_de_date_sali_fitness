@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <memory>
+#include "client.h"
 
 enum tip_somatic{
     ENDOMORF, MEZOMORF, ECTOMORF
@@ -30,7 +31,7 @@ public:
     dieta_standard(tip_somatic tipSomatic, int necesarCaloric, std::string tipDieta,
                    float necesarProteic);
 
-    virtual float calc_necesar_proteic(class client& client)  = 0;
+    virtual float calc_necesar_proteic(class client<unsigned int>& client)  = 0;
 
     virtual std::shared_ptr<dieta_standard> clone() const = 0;
 

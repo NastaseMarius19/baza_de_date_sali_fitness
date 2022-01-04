@@ -34,8 +34,8 @@ int main () {
     abonament VIP(300, "VIP",
                   {"Antrenamente online"s, "Intrare libera la orice sala partenera"s, "8 sedinte cu antrenor personal"s,
                    "diete personalizate"s});
-    client marius{"marius"s, 21, HashPassword("marius"), incepator, 55};
-    client viorel{"viorel"s, 19, HashPassword("mamaliga"), incepator, 50};
+    client<unsigned int> marius{"marius"s, 21, HashPassword("marius"), incepator, 55};
+    client<unsigned int> viorel{"viorel"s, 19, HashPassword("mamaliga"), incepator, 50};
 
     auto AppGym = aplicatie::get_app();
     AppGym->aduaga_abonament(incepator);

@@ -3,7 +3,6 @@
 //
 
 #include "dieta_deficit_caloric.h"
-#include "client.h"
 
 
 void dieta_deficit_caloric::calc_necesar_caloric() {
@@ -25,7 +24,7 @@ dieta_deficit_caloric::~dieta_deficit_caloric() {
     std::cout << "destr dieta deficit caloric\n";
 }
 
-float dieta_deficit_caloric::calc_necesar_proteic(class client& client) {
+float dieta_deficit_caloric::calc_necesar_proteic(class client<unsigned int>& client) {
     necesar_proteic = static_cast<float >(0.8 * client.getNrKilograme());
     return necesar_proteic;
 }
@@ -37,7 +36,7 @@ dieta_deficit_caloric::dieta_deficit_caloric(tip_somatic tipSomatic, int necesar
 std::shared_ptr<dieta_standard> dieta_deficit_caloric::clone() const {
     try {
         return std::make_shared<dieta_deficit_caloric>(*this);
-    }catch (std::bad_alloc){
+    }catch (std::bad_alloc const&){
         std::cout << "Allocation failure - dieta deficit caloric clone";
         exit(EXIT_FAILURE);
     }

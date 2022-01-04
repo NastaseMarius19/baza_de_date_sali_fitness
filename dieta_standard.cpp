@@ -3,7 +3,6 @@
 //
 
 #include "dieta_standard.h"
-#include "client.h"
 
 tip_somatic dieta_standard::getTipSomatic() const {
     return tipSomatic;
@@ -15,7 +14,7 @@ dieta_standard::dieta_standard(tip_somatic tipSomatic, int necesarCaloric, std::
                                                        necesar_caloric(necesarCaloric), tip_dieta(std::move(tipDieta)),
                                                        necesar_proteic(necesarProteic) {}
 
-float dieta_standard::calc_necesar_proteic(class client& client) {
+float dieta_standard::calc_necesar_proteic(class client<unsigned int>& client) {
     necesar_proteic = static_cast<float> (0.8 * client.getNrKilograme());
     return necesar_proteic;
 }
@@ -39,12 +38,5 @@ void dieta_standard::afis() {
 
 dieta_standard::~dieta_standard() {std::cout << "destr dieta_standard\n";}
 
-//std::shared_ptr<dieta_standard> dieta_standard::clone() const {
-//    try {
-//        return std::make_shared<dieta_standard>(*this);
-//    }catch (std::bad_alloc){
-//        std::cout << "Allocation failure - dieta standard clone";
-//        exit(EXIT_FAILURE);
-//    }
-//}
+
 

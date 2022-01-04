@@ -11,19 +11,20 @@
 #include <iostream>
 #include "HashPassword.h"
 
+template <typename T>
 class client{
     std::string userName;
     int varsta;
-    unsigned int parola;
+    T parola;
     class abonament abonament;
     float nr_kilograme;
 
 
 public:
 
-    client(std::string userName, int varsta,unsigned int parola, const class abonament &abonament, float nrKilograme);
+    client(std::string userName, int varsta,T parola, const class abonament &abonament, float nrKilograme);
 
-    friend std::ostream &operator<<(std::ostream &os, const client &client);
+    friend std::ostream &operator<<(std::ostream &os, const client<unsigned int>& client);
 
     const std::string &getName() const;
 

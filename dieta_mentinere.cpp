@@ -3,7 +3,6 @@
 //
 
 #include "dieta_mentinere.h"
-#include "client.h"
 
 void dieta_mentinere::calc_necesar_caloric() {
     switch(getTipSomatic()){
@@ -23,7 +22,7 @@ dieta_mentinere::~dieta_mentinere() {
     std::cout << "destr dieta mentinere \n";
 }
 
-float dieta_mentinere::calc_necesar_proteic(class client& client) {
+float dieta_mentinere::calc_necesar_proteic(class client<unsigned int>& client) {
     necesar_proteic = static_cast<float >(0.8 * client.getNrKilograme());
     return necesar_proteic;
 }

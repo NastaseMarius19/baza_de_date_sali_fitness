@@ -4,25 +4,29 @@
 
 #include "client.h"
 
-
-std::ostream &operator<<(std::ostream &os, const client &client) {
+template <typename T>
+std::ostream &operator<<(std::ostream &os, const client<T> &client) {
     os << "name: " << client.userName << " varsta: " << client.varsta << " gen: " << client.parola << "\nabonament: " << client.abonament << "\nnumar kilograme: " << client.nr_kilograme ;
     return os;
 }
 
-const std::string &client::getName() const {
+template <typename T>
+const std::string &client<T>::getName() const {
     return userName;
 }
 
-class abonament &client::getAbonament() {
+template <typename T>
+class abonament &client<T>::getAbonament() {
     return abonament;
 }
 
-void client::schimba_abonament(class abonament &abonament_nou){
+template <typename T>
+void client<T>::schimba_abonament(class abonament &abonament_nou){
     abonament = abonament_nou;
 }
 
-void client::schimba_parola() {
+template <typename T>
+void client<T>::schimba_parola() {
     for(int i = 0; i < 3; i++) {
         std::string parola_noua;
         std::string parola_noua_verificare;
@@ -40,10 +44,13 @@ void client::schimba_parola() {
         else
             std::cout << "Parola noua nu este aceeasi in ambele campuri, incercati din nou(mai aveti "<<3-i<<" incercari)!\n"; }
 }
-
-client::client(std::string userName, int varsta,unsigned int parola, const class abonament &abonament, float nrKilograme)
+template <typename T>
+client<T>::client(std::string userName, int varsta,T parola, const class abonament &abonament, float nrKilograme)
         : userName(std::move(userName)), varsta(varsta), parola(parola), abonament(abonament), nr_kilograme(nrKilograme) {}
 
-float client::getNrKilograme() const {
+template <typename T>
+float client<T>::getNrKilograme() const {
     return nr_kilograme;
 }
+
+template class client<unsigned int>;

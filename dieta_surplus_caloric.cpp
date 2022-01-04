@@ -3,7 +3,6 @@
 //
 
 #include "dieta_surplus_caloric.h"
-#include "client.h"
 
 void dieta_surplus_caloric::calc_necesar_caloric() {
     switch(getTipSomatic()){
@@ -26,7 +25,7 @@ dieta_surplus_caloric::~dieta_surplus_caloric() {
 }
 
 
-float dieta_surplus_caloric::calc_necesar_proteic(class client& client) {
+float dieta_surplus_caloric::calc_necesar_proteic(class client<unsigned int>& client) {
     necesar_proteic = static_cast<float >(0.8 * client.getNrKilograme());
     return necesar_proteic;
 }
