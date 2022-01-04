@@ -7,6 +7,7 @@
 
 
 #include <string>
+#include <utility>
 #include <vector>
 #include <iostream>
 
@@ -18,9 +19,6 @@ class gym
     friend class gym_builder;
 public:
     gym() = default;
-//    gym(std::string name, std::string location,
-//        std::vector<std::pair<std::string, std::string>> program) : name(std::move(name)), location(std::move(location)),
-//                                                                    program(std::move(program)) {}
 
     friend std::ostream &operator<<(std::ostream &os, const gym &gym);
 
@@ -30,19 +28,19 @@ public:
 
 class gym_builder{
 private:
-    gym gym;
+    class gym gym;
 public:
     gym_builder() = default;
     gym_builder& name(std::string name){
-        gym.name = name;
+        gym.name = std::move(name);
         return *this;
     }
     gym_builder& location(std::string location){
-        gym.location = location;
+        gym.location = std::move(location);
         return *this;
     }
     gym_builder& program(std::vector<std::pair<std::string, std::string>> program){
-        gym.program = program;
+        gym.program = std::move(program);
         return *this;
     }
     class gym build(){

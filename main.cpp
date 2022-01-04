@@ -36,7 +36,6 @@ int main () {
                    "diete personalizate"s});
     client marius{"marius"s, 21, HashPassword("marius"), incepator, 55};
     client viorel{"viorel"s, 19, HashPassword("mamaliga"), incepator, 50};
-    //aplicatie AppGym{{worldclass},{marius},{incepator},"Work Smart","Nastase Marius",{{"student",10}}};
 
     auto AppGym = aplicatie::get_app();
     AppGym->aduaga_abonament(incepator);
