@@ -20,16 +20,14 @@ int main () {
     }
 
     std::cout << "\n";
-    gym worldclass{"WordlClass"s, "Str.Soarelui Nr.25"s,
-                   {{"Luni", "8:00-22:00"}, {"Marti", "8:00-22:00"}, {"Miercuri", "8:00-22:00"}, {"Joi", "8:00-22:00"},
-                    {"Vineri", "8:00-22:00"}, {"Sambata", "10:00-16:00"}, {"Duminica", "INCHIS"}}};
-    gym energymhealth_hub{"energymhealth_hub"s, "Str.Mircea Bravo Nr.33"s,
-                          {{"Luni", "8:00-22:00"}, {"Marti", "8:00-22:00"}, {"Miercuri", "8:00-22:00"},
+    gym_builder gym_build;
+    gym worldclass = gym_build.name("WordlClass"s).location("Str.Soarelui Nr.25"s).program({{"Luni", "8:00-22:00"}, {"Marti", "8:00-22:00"}, {"Miercuri", "8:00-22:00"}, {"Joi", "8:00-22:00"},
+                      {"Vineri", "8:00-22:00"}, {"Sambata", "10:00-16:00"}, {"Duminica", "INCHIS"}}).build();
+    gym energymhealth_hub = gym_build.name("energymhealth_hub"s).location("Str.Mircea Bravo Nr.33"s).program({{"Luni", "8:00-22:00"}, {"Marti", "8:00-22:00"}, {"Miercuri", "8:00-22:00"},
                            {"Joi", "8:00-22:00"}, {"Vineri", "8:00-22:00"}, {"Sambata", "10:00-16:00"},
-                           {"Duminica", "INCHIS"}}};
-    gym anturaj_gym{"Anturaj_Gym"s, "Str.Principala Bloc 8 Sc.A Et.4"s,
-                    {{"Luni", "8:00-22:00"}, {"Marti", "8:00-22:00"}, {"Miercuri", "8:00-22:00"}, {"Joi", "8:00-22:00"},
-                     {"Vineri", "8:00-22:00"}, {"Sambata", "INCHIS"}, {"Duminica", "INCHIS"}}};
+                          {"Duminica", "INCHIS"}}).build();
+    gym anturaj_gym = gym_build.name("Anturaj_Gym"s).location("Str.Principala Bloc 8 Sc.A Et.4"s).program({{"Luni", "8:00-22:00"}, {"Marti", "8:00-22:00"}, {"Miercuri", "8:00-22:00"}, {"Joi", "8:00-22:00"},
+                     {"Vineri", "8:00-22:00"}, {"Sambata", "INCHIS"}, {"Duminica", "INCHIS"}}).build();
     abonament incepator(140, "Incepator", {"Antrenamente online", "8 sedinte pe luna"s});
     abonament avansat(200, "Avansat", {"Antrenamente online"s, "O intrare pe zi la orice sala partenera"s,
                                        "4 sedinte cu antrenor personal"s});
@@ -54,12 +52,9 @@ int main () {
 
 
     AppGym->scbimba_abonament_client("Incepator","marius"s);
-//    AppGym->adauga_client(viorel);
-//    AppGym->adauga_gym(energymhealth_hub);
-//    AppGym->adauga_gym(anturaj_gym);
-//    AppGym->aduaga_abonament(avansat);
+
     std::cout<<AppGym->getNume()<<"\n";
-//    AppGym->aduaga_abonament(VIP);
+
     std::cout<<"Fondatorul aplicatiei este: "<<AppGym->getFondator()<<"\n";
     std::cout << *AppGym;
     marius.schimba_parola();
