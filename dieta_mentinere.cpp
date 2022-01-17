@@ -22,7 +22,7 @@ dieta_mentinere::~dieta_mentinere() {
     std::cout << "destr dieta mentinere \n";
 }
 
-float dieta_mentinere::calc_necesar_proteic(class client<unsigned int>& client) {
+float dieta_mentinere::calc_necesar_proteic(class client<std::string>& client) {
     necesar_proteic = static_cast<float >(0.8 * client.getNrKilograme());
     return necesar_proteic;
 }
@@ -34,10 +34,6 @@ dieta_mentinere::dieta_mentinere(tip_somatic tipSomatic, int necesarCaloric,
                                                                                                      necesarProteic) {}
 
 std::shared_ptr<dieta_standard> dieta_mentinere::clone() const {
-    try {
         return std::make_shared<dieta_mentinere>(*this);
-    }catch (std::bad_alloc const&){
-        std::cout << "Allocation failure - dieta mentinere clone";
-        exit(EXIT_FAILURE);
-    }
+
 }

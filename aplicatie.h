@@ -10,12 +10,13 @@
 #include <ostream>
 #include <memory>
 #include "gym.h"
+
 #include "client.h"
 #include "dieta_standard.h"
 
 class aplicatie{
     std::vector<gym> gyms;
-    std::vector<client<unsigned int>> clienti;
+    std::vector<client<std::string>> clienti;
     std::vector<abonament> abonamente;
     std::string nume;
     std::string fondator;
@@ -23,7 +24,7 @@ class aplicatie{
     std::vector<std::shared_ptr<dieta_standard>> diete;
 
 private:
-    aplicatie(std::vector<gym> gyms, std::vector<client<unsigned int>> clienti,
+    aplicatie(std::vector<gym> gyms, std::vector<client<std::string>> clienti,
               std::vector<abonament> abonamente, std::string nume, std::string fondator,
               std::vector<std::pair<std::string, int>> cupoane);
 
@@ -44,7 +45,7 @@ public:
 
     void adauga_cupon(const std::string& nume_cupon, int procent_reducere_cupon);
 
-    void adauga_client(const class client<unsigned int> &client);
+    void adauga_client(const class client<std::string> &client);
 
     const std::vector<std::shared_ptr<dieta_standard>> &getDiete() const;
 
@@ -60,9 +61,11 @@ public:
 
     const std::string &getFondator() const;
 
-    bool verifica_pret_abonament(class client<unsigned int> client);
+    bool verifica_pret_abonament(class client<std::string> client);
 
-    void reducere(class client<unsigned int> &client, const std::string& nume_cupon); //cuponul este de fapt o reducere pentru diferite cazuri(student,elev,etc)
+    void calc_necesar_proteic_client( class client<std::string>& client, std::shared_ptr<dieta_standard> dieta);
+
+    void reducere(class client<std::string> &client, const std::string& nume_cupon); //cuponul este de fapt o reducere pentru diferite cazuri(student,elev,etc)
                                                                          //pentru un client se poate facem maxim o reducere, cu ajutorul functiei anterioare
                                                                          // care verifica daca pretul abonamentului unui client este egal sau mai mic cu pretul standard de la respectivul abonament
 

@@ -25,7 +25,7 @@ dieta_surplus_caloric::~dieta_surplus_caloric() {
 }
 
 
-float dieta_surplus_caloric::calc_necesar_proteic(class client<unsigned int>& client) {
+float dieta_surplus_caloric::calc_necesar_proteic(class client<std::string>& client) {
     necesar_proteic = static_cast<float >(0.8 * client.getNrKilograme());
     return necesar_proteic;
 }
@@ -35,11 +35,6 @@ dieta_surplus_caloric::dieta_surplus_caloric(tip_somatic tipSomatic, int necesar
         tipSomatic, necesarCaloric, tipDieta, necesarProteic) {}
 
 std::shared_ptr<dieta_standard> dieta_surplus_caloric::clone() const {
-    try {
         return std::make_shared<dieta_surplus_caloric>(*this);
-    }catch (std::bad_alloc const&){
-        std::cout << "Allocation failure - dieta surplus caloric clone";
-        exit(EXIT_FAILURE);
-    }
 }
 

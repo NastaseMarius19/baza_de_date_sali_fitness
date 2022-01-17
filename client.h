@@ -10,6 +10,7 @@
 #include "abonament.h"
 #include <iostream>
 #include "HashPassword.h"
+#include "password_encryption/digestpp-master/digestpp.hpp"
 
 template <typename T>
 class client{
@@ -22,7 +23,7 @@ class client{
 
 public:
 
-    client(std::string userName, int varsta,T parola, const class abonament &abonament, float nrKilograme);
+    client(std::string userName, int varsta, const class abonament &abonament, float nrKilograme);
 
     friend std::ostream &operator<<(std::ostream &os, const client<unsigned int>& client);
 
@@ -35,6 +36,8 @@ public:
     void schimba_abonament(class abonament &abonament_nou);
 
     void schimba_parola();
+
+    void set_parola();
 
     friend unsigned int HashPassword(std::string const &Combine);
 

@@ -5,7 +5,7 @@
 #include "aplicatie.h"
 
 
-aplicatie::aplicatie(std::vector<gym> gyms, std::vector<client<unsigned int>> clienti, std::vector<abonament> abonamente,
+aplicatie::aplicatie(std::vector<gym> gyms, std::vector<client<std::string>> clienti, std::vector<abonament> abonamente,
                      std::string nume, std::string fondator, std::vector<std::pair<std::string, int>> cupoane) : gyms(std::move(gyms)), clienti(std::move(clienti)),
                                                                                                                  abonamente(std::move(abonamente)), nume(std::move(nume)),
                                                                                                                  fondator(std::move(fondator)), cupoane(std::move(cupoane)) {}
@@ -14,7 +14,7 @@ void aplicatie::adauga_cupon(const std::string &nume_cupon, int procent_reducere
     cupoane.emplace_back(nume_cupon, procent_reducere_cupon);
 }
 
-void aplicatie::adauga_client(const client<unsigned int> &client) {
+void aplicatie::adauga_client(const class client<std::string> &client) {
     clienti.push_back(client);
 }
 
@@ -64,7 +64,7 @@ const std::string &aplicatie::getFondator() const {
     return fondator;
 }
 
-bool aplicatie::verifica_pret_abonament(class client<unsigned int> client) {
+bool aplicatie::verifica_pret_abonament(class client<std::string> client) {
     for(auto & j : abonamente)
         if(client.getAbonament().getNume() == j.getNume() && client.getAbonament().getPret() < j.getPret())
             return true;
@@ -72,7 +72,7 @@ bool aplicatie::verifica_pret_abonament(class client<unsigned int> client) {
 
 }
 
-void aplicatie::reducere(client<unsigned int> &client, const std::string &nume_cupon) {
+void aplicatie::reducere(client<std::string> &client, const std::string &nume_cupon) {
 
     for(unsigned long long i = 0; i < cupoane.size(); i++)
         if(cupoane[i].first == nume_cupon)
@@ -106,4 +106,8 @@ const std::vector<std::shared_ptr<dieta_standard>> &aplicatie::getDiete() const 
 }
 
 aplicatie* aplicatie::app = nullptr;
+
+void aplicatie::calc_necesar_proteic_client( class client<std::string> &client, std::shared_ptr<dieta_standard> dieta) {
+    dieta->calc_necesar_proteic(client);
+}
 

@@ -32,6 +32,8 @@ public:
 
     void setPret(float pret);
 
+    void verifica_abonament();
+
 };
 
 
