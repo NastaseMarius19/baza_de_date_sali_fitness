@@ -14,7 +14,7 @@ dieta_standard::dieta_standard(tip_somatic tipSomatic, int necesarCaloric, std::
                                                        necesar_caloric(necesarCaloric), tip_dieta(std::move(tipDieta)),
                                                        necesar_proteic(necesarProteic) {}
 
-float dieta_standard::calc_necesar_proteic(class client<unsigned int>& client) {
+float dieta_standard::calc_necesar_proteic(class client<std::string>& client) {
     necesar_proteic = static_cast<float> (0.8 * client.getNrKilograme());
     return necesar_proteic;
 }

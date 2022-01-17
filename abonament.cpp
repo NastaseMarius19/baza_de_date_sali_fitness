@@ -52,3 +52,10 @@ void abonament::setPret(float pret_) {
     abonament::pret = pret_;
 }
 
+void abonament::verifica_abonament() {
+    if(pret < 80)
+        throw eroare_pret_abonament();
+    if(bonusuri.size() == 1)
+        throw eroare_bonusuri_abonament();
+}
+

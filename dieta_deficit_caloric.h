@@ -19,7 +19,7 @@ public:
 
     void calc_necesar_caloric();
 
-    float calc_necesar_proteic(class client<unsigned int>& client) override;
+    float calc_necesar_proteic(class client<std::string>& client) override;
 
     std::shared_ptr<dieta_standard> clone() const override;
 

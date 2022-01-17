@@ -7,17 +7,11 @@
 #include "dieta_surplus_caloric.h"
 #include "dieta_mentinere.h"
 #include "erori_abonament.h"
+
 using namespace std::string_literals;
 
 
 int main () {
-
-    try{
-        abonament special(30,"special"s,{"4 sedinte cu antrenor"s,"10% reducere luna urmatoare"s});
-    }catch (eroare_abonament& error)
-    {
-        std::cout << error.what() << "\n";
-    }
 
     std::cout << "\n";
     gym_builder gym_build;
@@ -36,8 +30,19 @@ int main () {
                   {"Antrenamente online"s, "Intrare libera la orice sala partenera"s, "8 sedinte cu antrenor personal"s,
                    "diete personalizate"s});
 
-    client<unsigned int> marius{"marius"s, 21, HashPassword("marius"), incepator, 55};
-    client<unsigned int> viorel{"viorel"s, 19, HashPassword("mamaliga"), incepator, 50};
+    try {
+    VIP.verifica_abonament();
+    incepator.verifica_abonament();
+    avansat.verifica_abonament();
+    }
+    catch(eroare_abonament& error) {
+        std::cout << error.what() <<"\n";
+    }
+
+    client<std::string> marius{"marius"s, 21, incepator, 55};
+    client<std::string> viorel{"viorel"s, 19, incepator, 50};
+    marius.set_parola();
+    viorel.set_parola();
 
     auto AppGym = aplicatie::get_app();
     AppGym->aduaga_abonament(incepator);
@@ -65,6 +70,7 @@ int main () {
     AppGym->reducere(marius,"tataie");
     std::cout << marius.getAbonament();
 
+
     dieta_deficit_caloric dieta2{ECTOMORF,0,"deficit _caloric -viorel"s,0};
     dieta2.calc_necesar_caloric();
     dieta_surplus_caloric dieta3{ECTOMORF,0,"surplus caloric - marius"s,0};
@@ -72,12 +78,16 @@ int main () {
     dieta_mentinere dieta4{MEZOMORF,0,"mentinere - marius"s,0};
     dieta4.calc_necesar_caloric();
 
+
+
     AppGym->adauga_dieta(dieta2);
     AppGym->adauga_dieta(dieta3);
     AppGym->adauga_dieta(dieta4);
     AppGym->getDiete()[0]->calc_necesar_proteic(viorel);
     AppGym->getDiete()[1]->calc_necesar_proteic(marius);
     AppGym->getDiete()[2]->calc_necesar_proteic(marius);
+
+    AppGym->calc_necesar_proteic_client(viorel,dieta2.clone());
 
     std::cout << *AppGym;
 }
