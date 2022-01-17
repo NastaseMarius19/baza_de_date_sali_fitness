@@ -9,7 +9,6 @@
 #include <string>
 #include "abonament.h"
 #include <iostream>
-#include "HashPassword.h"
 #include "password_encryption/digestpp-master/digestpp.hpp"
 
 template <typename T>
@@ -38,8 +37,6 @@ public:
     void schimba_parola();
 
     void set_parola();
-
-    friend unsigned int HashPassword(std::string const &Combine);
 
 };
 

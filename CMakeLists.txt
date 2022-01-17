@@ -13,6 +13,6 @@ else()
 endif ()
 
 add_executable(baza_de_date_sali_fitness
-        main.cpp gym.cpp gym.h abonament.cpp abonament.h client.cpp client.h aplicatie.cpp aplicatie.h dieta_standard.cpp dieta_standard.h dieta_deficit_caloric.cpp dieta_deficit_caloric.h dieta_surplus_caloric.cpp dieta_surplus_caloric.h dieta_mentinere.cpp dieta_mentinere.h HashPassword.cpp HashPassword.h erori_abonament.cpp erori_abonament.h)
+        main.cpp gym.cpp gym.h abonament.cpp abonament.h client.cpp client.h aplicatie.cpp aplicatie.h dieta_standard.cpp dieta_standard.h dieta_deficit_caloric.cpp dieta_deficit_caloric.h dieta_surplus_caloric.cpp dieta_surplus_caloric.h dieta_mentinere.cpp dieta_mentinere.h erori_abonament.cpp erori_abonament.h)
 
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
